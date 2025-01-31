@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "ms-vscode.PowerShell",
+    "dougfinke.vscode-pester",
+    "ms-dotnettools.csharp",
+    "ms-vscode.cpptools",
+    "ms-azuretools.vscode-docker",
+    "DavidAnson.vscode-markdownlint"
+  ]
+}

@@ -1,0 +1,9 @@
+*
+!.gitignore
+!README.md
+!*.psd1
+!*.ps1
+!*.yml
+!*.xml
+!*.json
+!*.csv
