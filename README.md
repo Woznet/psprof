@@ -2,19 +2,30 @@
 
 My customized PowerShell Core profile configuration and scripts.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Directory Structure](#directory-structure)
+- [Usage](#usage)
+- [Requirements](#requirements)
+- [Functions](#functions)
+- [Modules](#modules)
+- [License](#license)
+
 ## Overview
 
 This repository contains my PowerShell profile configuration organized into modular components:
 
-- `profile.ps1` - Main profile that loads all components
-- `Microsoft.PowerShell_profile.ps1` - Host-specific customizations
-- `Profile/` - Core configuration modules:
-  - `options.ps1` - PSReadLine and general options
-  - `prompt.ps1` - oh-my-posh theme and prompt customization  
-  - `functions.ps1` - Custom utility functions
-  - `aliases.ps1` - Command aliases
-  - `completion.ps1` - Tab completion configuration
-  - `modules.ps1` - PowerShell module management
+- [`profile.ps1`](profile.ps1) - Main profile that loads all components
+- [`Microsoft.PowerShell_profile.ps1`](Microsoft.PowerShell_profile.ps1) - Host-specific customizations
+- [`Profile/`](Profile/) - Core configuration modules:
+  - [`options.ps1`](Profile/options.ps1) - PSReadLine and general options
+  - [`prompt.ps1`](Profile/prompt.ps1) - oh-my-posh theme and prompt customization  
+  - [`functions.ps1`](Profile/functions.ps1) - Custom utility functions
+  - [`aliases.ps1`](Profile/aliases.ps1) - Command aliases
+  - [`completion.ps1`](Profile/completion.ps1) - Tab completion configuration
+  - [`modules.ps1`](Profile/modules.ps1) - PowerShell module management
 
 ## Key Features
 
@@ -28,12 +39,32 @@ This repository contains my PowerShell profile configuration organized into modu
 
 ```
 PowerShell/
-├── Profile/           # Core configuration files
-│   ├── aliases/       # Alias definitions
-│   ├── completions/   # Tab completion scripts
-│   └── functions/     # Utility functions
-├── Scripts/           # Standalone PS scripts
-└── profile.ps1        # Main profile entry point
+├── Profile/                    # Core configuration files
+│   ├── aliases/               # Alias definitions
+│   │   ├── git.ps1           # Git-related aliases
+│   │   ├── system.ps1        # System command aliases
+│   │   └── tools.ps1         # Development tool aliases
+│   ├── completions/           # Tab completion scripts
+│   │   ├── git.ps1           # Git command completion
+│   │   ├── docker.ps1        # Docker command completion
+│   │   └── tools.ps1         # Tool-specific completions
+│   ├── functions/            # Utility functions
+│   │   ├── common.ps1        # General utility functions
+│   │   ├── git.ps1          # Git helper functions
+│   │   ├── network.ps1      # Network utility functions
+│   │   └── profile.ps1      # Profile management functions
+│   ├── options.ps1          # PSReadLine and shell options
+│   ├── prompt.ps1           # Prompt theme configuration
+│   ├── aliases.ps1          # Main aliases loader
+│   ├── completion.ps1       # Completion configuration
+│   ├── functions.ps1        # Functions loader
+│   └── modules.ps1          # Module management
+├── Scripts/                  # Standalone scripts
+│   ├── backup.ps1           # Backup utilities
+│   ├── install.ps1          # Profile installation
+│   └── update.ps1           # Profile update script
+├── Microsoft.PowerShell_profile.ps1  # Host-specific settings
+└── profile.ps1              # Main profile entry point
 ```
 
 ## Usage
@@ -67,7 +98,7 @@ Key function categories include:
 - Git workflow automation
 - PowerShell profile management
 
-See `Profile/functions.ps1` for the complete list.
+See [`Profile/functions.ps1`](Profile/functions.ps1) for the complete list.
 
 ## Modules
 
