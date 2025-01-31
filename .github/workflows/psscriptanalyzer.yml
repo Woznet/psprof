@@ -19,7 +19,6 @@ jobs:
         with:
           path: .
           recurse: true
-          severity: "Warning"
           output: results.sarif
 
       - name: Upload SARIF results
