@@ -25,3 +25,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: results.sarif
+
+      - name: Output Results
+        run: |
+          cat results.sarif
