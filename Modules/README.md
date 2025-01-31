@@ -1,7 +1,7 @@
 # PowerShell Core Modules Documentation
 
 >   [!NOTE]
->   *📂 **Folder Purpose**: This folder is part of my dotfiles repository, serving as a reference for installed PowerShell Core modules in my development environment.*
+> *📂 **Folder Purpose**: This folder is part of my dotfiles repository, documenting PowerShell Core modules in my development environment.*
 
 ## Contents
 
@@ -9,112 +9,118 @@
 
 ## Overview
 
-This document serves the purpose of providing a high-level overview of the PowerShell Core modules installed on my system.
-
-These modules are currently excluded from version control (`.gitignore`) but are critical for my workflows. 
+This document provides a comprehensive overview of PowerShell Core modules installed in my environment. While these modules are excluded from version control (`.gitignore`), they are essential for my daily workflows.
 
 ## Module Management
 
-I manage my modules using a custom [modules.json](https://github.com/jimbrig/PowerShell/blob/main/Modules/modules.json) / [modules.yml](https://github.com/jimbrig/PowerShell/blob/main/Modules/modules.yml) configuration file for easy backups and bootstrapping of installations.
+### Configuration and Backup
 
-The installed modules are backed up into a simple `JSON` file: [modules.json](https://github.com/jimbrig/PowerShell/blob/main/Modules/modules.json) and created via [modules.ps1](https://github.com/jimbrig/PowerShell/blob/main/Modules/modules.ps1).
+- **Configuration Files**:
+  - [modules.json](https://github.com/jimbrig/PowerShell/blob/main/Modules/modules.json)
+  - [modules.yml](https://github.com/jimbrig/PowerShell/blob/main/Modules/modules.yml)
+- **Management Scripts**:
+  - [modules.ps1](https://github.com/jimbrig/PowerShell/blob/main/Modules/modules.ps1) - Module backup and management
+  - [Remove-OldModules.ps1](https://github.com/jimbrig/PowerShell/blob/main/Modules/Remove-OldModules.ps1) - Cleanup script
 
-Additionally, utilize the [Remove-OldModules.ps1](https://github.com/jimbrig/PowerShell/blob/main/Modules/Remove-OldModules.ps1) script to remove any outdated versions of installed modules.
+## Modules
 
-## Installed Modules
-
-Below is a categorized list of the modules, with brief descriptions where applicable.
-
-### 📦 Core Utilities and Helpers
-
-- **BuildHelpers**: Utilities for building and packaging PowerShell modules.
-- **BurntToast**: Toast notifications for Windows systems.
-- **EZOut**: Streamlines output formatting for PowerShell commands.
-- **HelpOut**: Assists in creating and managing PowerShell help documentation.
-- **Metadata**: Simplifies managing script metadata.
-- **PSTypeExtensionTools**: Tools for managing and extending PowerShell types.
-
-### 🔍 Command and Script Enhancements
-- **Az.Tools.Predictor**: AI-driven command prediction for Azure.
-- **CompletionPredictor**: Enhances tab-completion predictions.
-- **F7History**: Enhanced command history browser.
-- **posh-git**: Git enhancements for the PowerShell prompt.
-- **PSFzf**: Integration with the fuzzy finder tool `fzf`.
-- **TabExpansionPlusPlus**: Custom tab completions for PowerShell commands.
-- **ZLocation**: Tracks frequently used directories and provides quick navigation.
-
-### 🔧 Development Tools
-- **InvokeBuild**: Build automation for PowerShell projects.
-- **platyPS**: Generate PowerShell documentation in Markdown.
-- **PowerShellBuild**: Build automation framework for PowerShell modules.
-- **psake**: Build automation inspired by Rake.
-- **VSCodeBackup**: Backups for Visual Studio Code settings and extensions.
-
-### 📋 Data Management
-- **DataMashup**: Tools for data wrangling and manipulation.
-- **ImportExcel**: Import and export Excel files without needing Excel installed.
-- **PSSQLite**: Work with SQLite databases directly from PowerShell.
-- **Write-ObjectToSQL**: Serialize PowerShell objects to SQL.
-
-### 🛠 System Management and Configuration
-- **ComputerCleanup**: Tools for cleaning up and optimizing systems.
-- **Configuration**: Manage system configurations programmatically.
-- **PSWindowsUpdate**: Manage Windows Updates from PowerShell.
-- **WifiTools**: Wireless network management utilities.
-- **xDSCResourceDesigner**: Tools for creating DSC resources.
-
-### 📦 Package and Resource Management
-- **Microsoft.PowerShell.PSResourceGet**: Manage PowerShell resources.
-- **PackageManagement**: Manage software packages in PowerShell.
-- **WingetTools**: Utilities for managing Windows apps with Winget.
-- **Microsoft.WinGet.Client**: Access Winget functionality programmatically.
-- **Microsoft.WinGet.CommandNotFound**: Enhances Winget usability in PS.
-
-### 🛡 Security and Secrets
-- **Microsoft.PowerShell.SecretManagement**: Manage secrets in a unified way.
-- **Microsoft.PowerShell.SecretStore**: A secure vault for SecretManagement.
-
-### 🎨 Console Enhancements
-- **Microsoft.PowerShell.ConsoleGuiTools**: GUI tools for the terminal.
-- **Terminal-Icons**: Adds file and folder icons to the terminal.
-- **PSClearHost**: Enhances the `Clear-Host` experience.
-- **PSWriteColor**: Advanced colored text output for scripts.
-
-### 📚 Testing and Quality
-- **Pester**: Unit testing framework for PowerShell.
-- **PSScriptAnalyzer**: Analyze scripts for style, performance, and errors.
-- **PSCodeHealth**: Assess the health of PowerShell scripts and modules.
-
-### 🔍 Command-Line Completions
-- **DockerCompletion**: Auto-completions for Docker commands.
-- **PSBashCompletions**: Enable bash-style command-line completions.
-- **PSCompletions**: Generic tab-completion utilities.
-
-### 🎨 HTML and GUI Tools
-- **PSWriteHTML**: Create interactive HTML reports from PowerShell.
-- **Microsoft.PowerShell.Crescendo**: Create native commands from PowerShell scripts.
-
-### 🧰 Miscellaneous
-- **PSAI**: PowerShell AI utilities.
-- **PSEverything**: Interface with Everything Search Engine.
-- **PSMenu**: Create terminal-based menus in PowerShell.
-- **PSSoftware**: Manage installed software.
-- **PSStucco**: Generate and manage structured console output.
-- **tiPS**: General-purpose PowerShell tools.
-
-### 🧪 Experimental and Special-Purpose Modules
-- **Cobalt**: Experimental module for advanced scripting.
-- **ThreadJob**: Multithreaded job management in PowerShell.
-- **Microsoft.PowerShell.WhatsNew**: Discover new features in PowerShell.
-
-### 🛠 Tools Under Development
-- **WTToolBox**: Utilities for working with Windows Terminal.
-- **psyml**: YAML processing tools for PowerShell.
-- **powershell-yaml**: YAML serialization and deserialization.
+<!-- BEGIN_MODULES -->
+- **Benchpress** (1.3.8)
+- **BuildHelpers** (2.0.16)
+- **Cobalt** (0.4.0)
+- **CompletionPredictor** (0.1.1)
+- **ComputerCleanup** (1.2.0)
+- **Configuration** (1.6.0)
+- **CredentialManager** (2.0)
+- **DataMashup** (0.1.9)
+- **DesktopManager** (0.0.3)
+- **DockerCompletion** (1.2704.0.241216)
+- **EZOut** (2.0.6)
+- **F7History** (1.4.7)
+- **Firewall-Manager** (1.1.1)
+- **FormatMarkdownTable** (1.0.4)
+- **Hcl2PS** (0.6.1)
+- **HelpOut** (0.5.5)
+- **ImportExcel** (7.8.10)
+- **InvokeBuild** (5.12.1)
+- **jwtPS** (1.1.3)
+- **Metadata** (1.5.7)
+- **Microsoft.PowerShell.ConsoleGuiTools** (0.7.7)
+- **Microsoft.PowerShell.Crescendo** (1.1.0)
+- **Microsoft.PowerShell.PSResourceGet** (1.0.6)
+- **Microsoft.PowerShell.SecretManagement** (1.1.2)
+- **Microsoft.PowerShell.SecretStore** (1.0.6)
+- **Microsoft.PowerShell.ThreadJob** (2.1.0)
+- **Microsoft.PowerShell.WhatsNew** (0.5.5)
+- **Microsoft.WinGet.Client** (1.10.90)
+- **Microsoft.WinGet.CommandNotFound** (1.0.4.0)
+- **ModuleBuilder** (3.1.0)
+- **ModuleFast** (0.5.1)
+- **PackageManagement** (1.4.8.1)
+- **Pester** (5.6.1)
+- **Plaster** (1.1.4)
+- **platyPS** (0.14.2)
+- **platyPS** (0.14.1)
+- **Posh** (0.2)
+- **posh-git** (1.1.0)
+- **PoshCodex** (1.0.8)
+- **powershell-yaml** (0.4.11)
+- **PowerShellBuild** (0.6.2)
+- **PowerShellGet** (3.0.23)
+- **ps-menu** (1.0.9)
+- **ps2exe** (1.0.14)
+- **PSAI** (0.4.0)
+- **psake** (4.9.1)
+- **psake** (4.9.0)
+- **PSBashCompletions** (1.2.6)
+- **PSClearHost** (1.0.0)
+- **PSCodeHealth** (0.2.26)
+- **PSCompletions** (5.2.5)
+- **PSConfigFile** (0.1.36)
+- **pscredentialmanager** (1.0.11)
+- **PSDates** (1.0.5)
+- **PSDepend** (0.3.8)
+- **PSEverything** (3.3.0)
+- **PSFileTransfer** (5.55.0)
+- **PSFunctionInfo** (1.4.0)
+- **PSFzf** (2.6.7)
+- **PSGitHubChat** (0.1.0)
+- **PSHelp.Copilot** (1.0.6)
+- **PSJsonCredential** (2.2.0)
+- **PSLog** (5.55.0)
+- **PSNotes** (0.2.0.1)
+- **PSOpenAI** (4.12.2)
+- **PSReadLine** (2.4.0)
+- **PSScriptAnalyzer** (1.23.0)
+- **PSScriptTools** (2.50.0)
+- **PSSoftware** (1.0.29)
+- **PSSQLite** (1.1.0)
+- **PSStucco** (0.6.1)
+- **PSTypeExtensionTools** (1.10.1)
+- **PSWindowsUpdate** (2.2.1.5)
+- **PSWinVitals** (0.7.0)
+- **PSWriteColor** (1.0.1)
+- **PSWriteExcel** (0.1.15)
+- **PSWriteHTML** (1.28.0)
+- **PwshSpectreConsole** (2.1.1)
+- **Sampler** (0.118.1)
+- **ShowDemo** (0.1.7)
+- **SysInfo** (1.2.0)
+- **TabExpansionPlusPlus** (1.2)
+- **Terminal-Icons** (0.11.0)
+- **TerminalGuiDesigner** (0.0.1)
+- **VSCodeBackup** (0.5.0)
+- **WifiTools** (1.8.4)
+- **WindowsCredentialManager** (0.0.1)
+- **WindowsSandboxTools** (1.1.0)
+- **WingetTools** (1.7.0)
+- **Write-ObjectToSQL** (1.13)
+- **WTToolBox** (1.15.0)
+- **ZLocation** (1.4.3)
+<!-- END_MODULES -->
 
 ### Notes
 
 - This list will be kept up to date as new modules are added or removed.
 - Modules are excluded from version control to keep the repository clean and lightweight.
 - To replicate this setup, use the [PowerShellGet](https://learn.microsoft.com/en-us/powershell/scripting/gallery/overview) module to install the listed modules.
-
