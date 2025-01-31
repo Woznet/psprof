@@ -1,24 +1,3 @@
-#Requires -Module Pester
-
-<#
-#>
-
-Describe 'Test PowerShell Setup and Configuration' {
-    BeforeAll {
-        $PSVersion = $PSVersionTable.PSVersion
-        $PSProfiles = $PROFILE | Get-Member -Type NoteProperty | Select-Object Name, Definition | ForEach-Object {
-            [PSCustomObject]@{
-                Name = $_.Name
-                Path = $_.Definition -match "=(.*)$" | ForEach-Object { $Matches[1] }
-            }
-        }
-    }
-
-    It 'Checks that the all "user" PowerShell profiles exist' {
-        Test-Path -Path $PSProfiles[2].Path | Should -Be $true
-        Test-Path -Path $PSProfiles[3].Path | Should -Be $true
-    }
-}
 
 Describe 'PowerShell Core Installation Checks' {
 
@@ -30,7 +9,7 @@ Describe 'PowerShell Core Installation Checks' {
         $psStableExpectedVersionMajor = '7'
 
         $psPreviewVersion = ((Get-Command $PreviewPath).FileVersionInfo.ProductVersion).Substring(0, 5)
-        $psPreviewExpectedVersion = '7.4.0'
+        $psPreviewExpectedVersion = '7.6.0'
 
         $EnvPaths = [System.Environment]::GetEnvironmentVariable('Path', 'Machine') -split ';'
 

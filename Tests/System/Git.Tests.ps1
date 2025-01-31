@@ -17,12 +17,31 @@
 
 Describe 'Testing Git Configuration Values' {
     BeforeAll {
-        . "$PSScriptRoot\..\Helpers\Get-GitConfigValue.ps1"
-        . "$PSScriptRoot\..\Helpers\Test-Email.ps1"
+        Function Get-GitConfigPath {
+            $path = "$HOME\.gitconfig"
+            if ($ENV:XDG_CONFIG_HOME) {
+                if (Test-Path -Path $ENV:XDG_CONFIG_HOME\git\config) {
+                    $path = "$ENV:XDG_CONFIG_HOME\git\config"
+                }
+            }
+            return $path
+        }
+
+        Function Get-GitConfigValue($Key) {
+            git config --global --get $Key
+        }
+
+        Function Test-Email($Email) {
+            if ($Email -match '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$') {
+                return $true
+            } else {
+                return $false
+            }
+        }
     }
 
     It 'Checks a global git configuration file exists' {
-        $GitConfigPath = "$HOME\.gitconfig"
+        $GitConfigPath = Get-GitConfigPath
         Test-Path -Path $GitConfigPath | Should -Be $true
         $GitConfigContent = Get-Content -Path $GitConfigPath
         $GitConfigContent | Should -Not -BeNullOrEmpty

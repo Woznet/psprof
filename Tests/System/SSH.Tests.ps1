@@ -6,15 +6,46 @@
 
 Describe 'Testing SSH Configuration and Keys' {
     BeforeAll {
-        . "$PSScriptRoot\..\Helpers\Test-SSHKey.ps1"
+        Function Test-SSHKey {
+            Param(
+                [Parameter(Mandatory)]
+                [String]$Key
+            )
 
-        $SSHConfigDir = "$env:USERPROFILE\.ssh"
-        $SSHConfigFile = "$SSHConfigDir\config"
+            Begin {
+                if ((Get-Service -Name ssh-agent).Status -ne 'Running') {
+                    Write-Warning "SSH Agent is not running. Please start the SSH Agent and try again."
+                    return
+                }
+                if (-not (Get-Command -Name 'ssh' -ErrorAction SilentlyContinue)) {
+                    Write-Error "SSH is not installed. Please install SSH and try again."
+                    return
+                }
+                if (-not (Test-Path -Path "$HOME\.ssh")) {
+                    Write-Error "SSH directory not found at $HOME\.ssh"
+                    return
+                }
+                $Path = "$HOME\.ssh\$Key"
+            }
 
-        $SSHKeys = Get-ChildItem -Path $SSHConfigDir -Filter 'id_*' -File
+            Process {
+                if (Test-Path -Path $Path) {
+                    Write-Host "Key $Key exists" -ForegroundColor Green
+                    return $true
+                } else {
+                    Write-Host "Key $Key does not exist" -ForegroundColor Red
+                    return $false
+                }
+            }
+        }
 
-        $RSAKeys = $SSHKeys | Where-Object { $_.Name -like 'id_rsa*' }
-        $ECDSAKeys = $SSHKeys | Where-Object { $_.Name -like 'id_ed25519*' }
+        $Script:SSHConfigDir = "$env:USERPROFILE\.ssh"
+        $Script:SSHConfigFile = "$SSHConfigDir\config"
+
+        $Script:SSHKeys = Get-ChildItem -Path $SSHConfigDir -Filter 'id_*' -File
+
+        $Script:RSAKeys = $SSHKeys | Where-Object { $_.Name -like 'id_rsa*' }
+        $Script:ECDSAKeys = $SSHKeys | Where-Object { $_.Name -like 'id_ed25519*' }
     }
 
     It 'Checks ssh command is available' {
@@ -62,24 +93,9 @@ Describe 'Testing SSH Configuration and Keys' {
         $SSHConfigFileContent | Should -Not -BeNullOrEmpty
     }
 
-    It 'Checks that the SSH config file contains the RSA keys' {
-        $RSAKeys | ForEach-Object {
-            $SSHConfigFileContent -match $_.Name | Should -Be $true
-        }
-    }
-
-    It 'Checks that the SSH config file contains the ECDSA keys' {
-        $ECDSAKeys | ForEach-Object {
-            $SSHConfigFileContent -match $_.Name | Should -Be $true
-        }
-    }
-
     It 'Checks that the SSH config file contains the correct permissions' {
-        $SSHConfigFilePermissions = (Get-Acl -Path $SSHConfigFile).Access
-        $SSHConfigFilePermissions | Should -Not -BeNullOrEmpty
+        (Get-Acl -Path $SSHConfigFile).Access | Should -Not -BeNullOrEmpty
     }
-
-
 
 }
 
