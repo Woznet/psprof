@@ -5,7 +5,12 @@
 
 ## Contents
 
-[TOC]
+- [Overview](#overview)
+- [Module Management](#module-management)
+  - [Configuration and Backup](#configuration-and-backup)
+    - [Management Scripts](#management-scripts)
+- [Modules](#modules)
+- [Notes](#notes)
 
 ## Overview
 
