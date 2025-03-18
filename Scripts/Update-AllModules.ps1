@@ -26,14 +26,6 @@ Function Update-AllPSModules {
     .EXAMPLE
     Update-AllPSModules -AllowPreviews
     This will update all locally installed modules and include versions with 'preview' or 'RC' in the version number.
-
-    .NOTES
-    Filename:       Update-AllPSModules.ps1
-    Contributors:   Kieran Walsh
-    Created:        2021-01-09
-    Last Updated:   2023-04-28
-    Version:        1.48.00
-    ProjectUri:     https://github.com/kieranwalsh/Update-AllPSModules
 #>
 
   [CmdletBinding()]
