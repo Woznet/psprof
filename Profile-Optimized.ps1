@@ -1,40 +1,14 @@
-# --------------------------------------------------------------
-# PowerShell Core $PROFILE (Current User, All Hosts)
-# --------------------------------------------------------------
+# Profile-Optimized.ps1
+# An optimized version of the profile
 
-using namespace System.Management.Automation
-using namespace System.Management.Automation.Language
-using namespace System.Diagnostics.CodeAnalysis
-
-<#
-    .SYNOPSIS
-        PowerShell Profile with performance improvements and environment detection
-    .DESCRIPTION
-        This script is executed when a new PowerShell session is created for the current user, on any host.
-        It includes performance improvements and environment detection to handle different PowerShell hosts.
-    .PARAMETER Vanilla
-        Runs a "vanilla" session, without any configurations, variables, customizations, modules or scripts pre-loaded.
-    .PARAMETER NoImports
-        Skips importing modules and scripts.
-    .PARAMETER Measure
-        Enables performance measurement of each profile component.
-    .NOTES
-        Author: Jimmy Briggs <jimmy.briggs@jimbrig.com>
-#>
-#Requires -Version 7
-[SuppressMessageAttribute('PSAvoidAssignmentToAutomaticVariable', '', Justification = 'PS7 Polyfill')]
-[SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '', Justification = 'Profile Script')]
 [CmdletBinding()]
-Param(
-    [Parameter()]
+param(
     [switch]$Vanilla,
-    [Parameter()]
     [switch]$NoImports,
-    [Parameter()]
     [switch]$Measure,
-    [Parameter()]
-    [switch]$DebugLogging
+    [switch]$Debug
 )
+
 # Start timing if measurement is enabled
 if ($Measure) {
     $mainStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
@@ -65,16 +39,16 @@ if ($Measure) {
 }
 
 # Debug logging
-if ($DebugLogging) {
+if ($Debug) {
     $debugLog = @()
-    $debugLogPath = Join-Path -Path $PSScriptRoot -ChildPath "profile-debug.log"
+    $debugLogPath = "$PSScriptRoot\profile-optimized-debug.log"
     "" | Out-File -FilePath $debugLogPath -Force
 
     function Log-Debug {
         param([string]$Message)
         $timestamp = Get-Date -Format "HH:mm:ss.fff"
-        $entry = "$timestamp - $Message"
-        $global:debugLog += $entry
+        $entry = "${timestamp}: $Message"
+        $debugLog += $entry
         $entry | Out-File -FilePath $debugLogPath -Append
         Write-Verbose $entry
     }
@@ -226,8 +200,8 @@ if (-not $NoImports) {
         }
     }
 
-    # Load non-essential modules sequentially
-    Measure-Block -Name "Optional Modules" -ScriptBlock {
+    # Load non-essential modules in the background
+    Measure-Block -Name "Background Module Loading" -ScriptBlock {
         $OptionalModules = @(
             'posh-git'
             'CompletionPredictor'
@@ -236,11 +210,44 @@ if (-not $NoImports) {
             'PoshCodex'
         )
 
-        # Load optional modules sequentially
-        foreach ($module in $OptionalModules) {
-            if (Get-Module -ListAvailable -Name $module -ErrorAction SilentlyContinue) {
-                Log-Debug "Loading optional module: $module"
-                Import-Module $module -ErrorAction SilentlyContinue
+        # Start a background job to load optional modules
+        $job = $null
+        try {
+            # Try to use Start-ThreadJob if available
+            if (Get-Command Start-ThreadJob -ErrorAction SilentlyContinue) {
+                $job = Start-ThreadJob -ScriptBlock {
+                    param($modules)
+                    foreach ($module in $modules) {
+                        if (Get-Module -ListAvailable -Name $module -ErrorAction SilentlyContinue) {
+                            Import-Module $module -ErrorAction SilentlyContinue
+                        }
+                    }
+                } -ArgumentList @($OptionalModules) -ErrorAction SilentlyContinue
+            } else {
+                # Fall back to Start-Job
+                $job = Start-Job -ScriptBlock {
+                    param($modules)
+                    foreach ($module in $modules) {
+                        if (Get-Module -ListAvailable -Name $module -ErrorAction SilentlyContinue) {
+                            Import-Module $module -ErrorAction SilentlyContinue
+                        }
+                    }
+                } -ArgumentList @($OptionalModules) -ErrorAction SilentlyContinue
+            }
+        } catch {
+            Log-Debug "Error starting background job: $_"
+            $job = $null
+        }
+
+        if ($job) {
+            Log-Debug "Started background job for optional modules: Job ID $($job.Id)"
+        } else {
+            Log-Debug "Failed to start background job for optional modules"
+            # Fall back to sequential loading if background job fails
+            foreach ($module in $OptionalModules) {
+                if (Get-Module -ListAvailable -Name $module -ErrorAction SilentlyContinue) {
+                    Import-Module $module -ErrorAction SilentlyContinue
+                }
             }
         }
     }
@@ -265,7 +272,8 @@ Measure-Block -Name "zoxide" -ScriptBlock {
     if (Get-Command zoxide -ErrorAction SilentlyContinue) {
         Log-Debug "Initializing zoxide"
         try {
-            Invoke-Expression (& { (zoxide init powershell | Out-String) })
+            # Direct initialization without caching
+            Invoke-Expression (& { (zoxide init powershell --hook prompt) })
         } catch {
             Write-Warning "Failed to initialize zoxide: $_"
             Log-Debug "Error initializing zoxide: $_"
@@ -285,6 +293,6 @@ if ($Measure) {
     Write-Host "`nTotal profile load time: $($mainStopwatch.Elapsed.TotalSeconds) seconds" -ForegroundColor Cyan
 }
 
-if ($DebugLogging) {
+if ($Debug) {
     Write-Host "`nDebug log has been written to $debugLogPath" -ForegroundColor Cyan
 }
