@@ -11,6 +11,7 @@ My customized PowerShell Core profile configuration and scripts.
 - [Requirements](#requirements)
 - [Functions](#functions)
 - [Modules](#modules)
+- [Profile Optimization](#profile-optimization)
 - [License](#license)
 
 ## Overview
@@ -112,9 +113,30 @@ Common modules loaded by this profile:
 
 Additional modules can be managed via the module sync functions.
 
+## Profile Optimization
+
+The profile has been optimized for faster loading and better environment detection:
+
+- **Environment Detection**: Automatically detects and adapts to different PowerShell hosts (VSCode, regular console, ISE)
+- **Performance Improvements**: Caches external resources like ModuleFast and zoxide initialization
+- **VSCode Integration**: Custom prompt and environment-specific settings for VSCode
+- **Conditional Loading**: Only loads components that are needed in the current environment
+
+### Documentation and Testing
+
+- **Documentation**: See [Docs/Profile/Optimization](Docs/Profile/Optimization/index.md) for detailed information
+- **Tests**: Run `Tests/Profile/Optimization/Test-ProfileOptimization.ps1` to verify the optimization
+
+### Performance Measurement
+
+You can measure the profile loading performance by adding the `-Measure` parameter:
+
+```powershell
+. $PROFILE -Measure
+```
+
+This will display timing information for each component of the profile.
+
 ## License
 
 MIT License - See LICENSE file for details
-
-
-
