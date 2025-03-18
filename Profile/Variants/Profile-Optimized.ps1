@@ -9,56 +9,28 @@ param(
     [switch]$Debug
 )
 
+# Import utility functions
+$loggingFunctionsPath = Join-Path -Path (Split-Path -Parent $PSScriptRoot) -ChildPath "Profile/Functions/Private/Logging-Functions.ps1"
+if (Test-Path -Path $loggingFunctionsPath) {
+    . $loggingFunctionsPath
+    Write-Verbose "Imported logging functions from $loggingFunctionsPath"
+} else {
+    Write-Warning "Logging functions file not found: $loggingFunctionsPath"
+    # Define minimal logging function as fallback
+    function Log-Debug { param([string]$Message) Write-Verbose $Message }
+}
+
 # Start timing if measurement is enabled
 if ($Measure) {
     $mainStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
     $timings = @{}
-
-    function Measure-Block {
-        param(
-            [string]$Name,
-            [scriptblock]$ScriptBlock
-        )
-
-        $sw = [System.Diagnostics.Stopwatch]::StartNew()
-        & $ScriptBlock
-        $sw.Stop()
-        $timings[$Name] = $sw.Elapsed
-
-        Write-Host "  $Name completed in $($sw.Elapsed.TotalSeconds) seconds" -ForegroundColor Green
-    }
-} else {
-    function Measure-Block {
-        param(
-            [string]$Name,
-            [scriptblock]$ScriptBlock
-        )
-
-        & $ScriptBlock
-    }
 }
 
-# Debug logging
+# Initialize debug logging if enabled
 if ($Debug) {
-    $debugLog = @()
     $debugLogPath = "$PSScriptRoot\profile-optimized-debug.log"
-    "" | Out-File -FilePath $debugLogPath -Force
-
-    function Log-Debug {
-        param([string]$Message)
-        $timestamp = Get-Date -Format "HH:mm:ss.fff"
-        $entry = "${timestamp}: $Message"
-        $debugLog += $entry
-        $entry | Out-File -FilePath $debugLogPath -Append
-        Write-Verbose $entry
-    }
-
-    Log-Debug "Starting profile with debugging"
-} else {
-    function Log-Debug {
-        param([string]$Message)
-        Write-Verbose $Message
-    }
+    Initialize-DebugLog -LogPath $debugLogPath
+    Log-Debug -Message "Starting profile with debugging" -LogPath $debugLogPath
 }
 
 # Skip everything if Vanilla mode is enabled
@@ -68,7 +40,7 @@ if ($Vanilla) {
 }
 
 # Environment detection
-Measure-Block -Name "Environment Detection" -ScriptBlock {
+Measure-ProfileBlock -Name "Environment Detection" -Timings $timings -ScriptBlock {
     $Global:isVSCode = $env:TERM_PROGRAM -eq 'vscode' -or $host.Name -eq 'Visual Studio Code Host'
     $Global:isRegularPowerShell = $host.Name -eq 'ConsoleHost' -and -not $isVSCode
     $Global:isISE = $host.Name -eq 'Windows PowerShell ISE Host'
@@ -77,7 +49,7 @@ Measure-Block -Name "Environment Detection" -ScriptBlock {
 }
 
 # Path setup
-Measure-Block -Name "Path Setup" -ScriptBlock {
+Measure-ProfileBlock -Name "Path Setup" -Timings $timings -ScriptBlock {
     $Global:ProfileRootPath = Split-Path -Parent $PSScriptRoot
     $Global:ProfileSourcePath = Join-Path -Path $ProfileRootPath -ChildPath 'Profile'
 
@@ -86,7 +58,7 @@ Measure-Block -Name "Path Setup" -ScriptBlock {
 }
 
 # Essential modules
-Measure-Block -Name "Essential Modules" -ScriptBlock {
+Measure-ProfileBlock -Name "Essential Modules" -Timings $timings -ScriptBlock {
     # PSReadLine (essential)
     if (Get-Module -ListAvailable -Name PSReadLine) {
         Log-Debug "Loading PSReadLine"
@@ -115,7 +87,7 @@ Measure-Block -Name "Essential Modules" -ScriptBlock {
 
 # Import core profile components
 if (-not $NoImports) {
-    Measure-Block -Name "Core Components" -ScriptBlock {
+    Measure-ProfileBlock -Name "Core Components" -Timings $timings -ScriptBlock {
         $CoreImports = @(
             @{ Name = 'Functions'; Path = 'Profile.Functions.ps1' }
             @{ Name = 'Aliases'; Path = 'Profile.Aliases.ps1' }
@@ -140,7 +112,7 @@ if (-not $NoImports) {
     }
 
     # Prompt (only if oh-my-posh is installed and not in VSCode)
-    Measure-Block -Name "Prompt" -ScriptBlock {
+    Measure-ProfileBlock -Name "Prompt" -Timings $timings -ScriptBlock {
         if (-not $isVSCode -and (Get-Command oh-my-posh -ErrorAction SilentlyContinue)) {
             Log-Debug "Loading oh-my-posh prompt"
             $promptPath = Join-Path -Path $ProfileSourcePath -ChildPath 'Profile.Prompt.ps1'
@@ -162,7 +134,7 @@ if (-not $NoImports) {
     }
 
     # Load completions
-    Measure-Block -Name "Completions Setup" -ScriptBlock {
+    Measure-ProfileBlock -Name "Completions Setup" -Timings $timings -ScriptBlock {
         $completionsPath = Join-Path -Path $ProfileSourcePath -ChildPath "Profile.Completions.ps1"
         if (Test-Path -Path $completionsPath) {
             try {
@@ -179,7 +151,7 @@ if (-not $NoImports) {
     }
 
     # Load non-essential modules in the background
-    Measure-Block -Name "Background Module Loading" -ScriptBlock {
+    Measure-ProfileBlock -Name "Background Module Loading" -Timings $timings -ScriptBlock {
         $OptionalModules = @(
             'posh-git'
             'CompletionPredictor'
@@ -231,7 +203,7 @@ if (-not $NoImports) {
     }
 
     # Load extras last
-    Measure-Block -Name "Extras" -ScriptBlock {
+    Measure-ProfileBlock -Name "Extras" -Timings $timings -ScriptBlock {
         $extrasPath = Join-Path -Path $ProfileSourcePath -ChildPath 'Profile.Extras.ps1'
         if (Test-Path -Path $extrasPath) {
             Log-Debug "Loading extras"
@@ -246,7 +218,7 @@ if (-not $NoImports) {
 }
 
 # Setup zoxide (simplified approach)
-Measure-Block -Name "zoxide" -ScriptBlock {
+Measure-ProfileBlock -Name "zoxide" -Timings $timings -ScriptBlock {
     if (Get-Command zoxide -ErrorAction SilentlyContinue) {
         Log-Debug "Initializing zoxide"
         try {
