@@ -42,7 +42,7 @@ ForEach ($Mod in $ProfileModulesToImport) {
   }
 }
 
-if (Get-PSResource -Name ZLocation) {
-  Import-Module ZLocation
-  Write-Host -Foreground Green "`n[ZLocation] knows about $((Get-ZLocation).Keys.Count) locations.`n"
-}
+# if (Get-PSResource -Name ZLocation) {
+#   Import-Module ZLocation
+#   Write-Host -Foreground Green "`n[ZLocation] knows about $((Get-ZLocation).Keys.Count) locations.`n"
+# }
