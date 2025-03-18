@@ -187,42 +187,20 @@ if (-not $NoImports) {
         }
     }
 
-    # Lazy-load completions
+    # Load completions
     Measure-Block -Name "Completions Setup" -ScriptBlock {
-        # Source the lazy-loading mechanism
-        $lazyCompletionsPath = Join-Path -Path $PSScriptRoot -ChildPath "LazyLoad-Completions.ps1"
-        if (Test-Path -Path $lazyCompletionsPath) {
-            . $lazyCompletionsPath
-            Log-Debug "Loaded lazy completion mechanism"
-
-            # Register completions for common commands
-            $completionPath = Join-Path -Path $ProfileSourcePath -ChildPath "Completions"
-            if (Test-Path -Path $completionPath) {
-                $completionFiles = Get-ChildItem -Path $completionPath -Filter "*.ps1" -ErrorAction SilentlyContinue
-
-                Log-Debug "Found $($completionFiles.Count) completion files"
-
-                # Register common completions
-                $commonCommands = @{
-                    "docker" = $completionFiles | Where-Object { $_.Name -like "*docker*.ps1" } | Select-Object -First 1
-                    "git"    = $completionFiles | Where-Object { $_.Name -like "*git*.ps1" } | Select-Object -First 1
-                    "winget" = $completionFiles | Where-Object { $_.Name -like "*winget*.ps1" } | Select-Object -First 1
-                    "scoop"  = $completionFiles | Where-Object { $_.Name -like "*scoop*.ps1" } | Select-Object -First 1
-                    "gh"     = $completionFiles | Where-Object { $_.Name -like "*gh*.ps1" } | Select-Object -First 1
-                }
-
-                foreach ($command in $commonCommands.Keys) {
-                    $completionFile = $commonCommands[$command]
-                    if ($completionFile) {
-                        Log-Debug "Registering lazy completion for $command"
-                        Register-LazyCompletion -CommandName $command -ScriptPath $completionFile.FullName
-                    }
-                }
-            } else {
-                Log-Debug "Completions directory not found: $completionPath"
+        $completionsPath = Join-Path -Path $ProfileSourcePath -ChildPath "Profile.Completions.ps1"
+        if (Test-Path -Path $completionsPath) {
+            try {
+                . $completionsPath
+                Log-Debug "Loaded completions from $completionsPath"
+            } catch {
+                Write-Warning "Failed to load completions: $_"
+                Log-Debug "Error loading completions: $_"
             }
         } else {
-            Log-Debug "Lazy completion mechanism not found: $lazyCompletionsPath"
+            Write-Warning "Completions file not found: $completionsPath"
+            Log-Debug "Completions file not found: $completionsPath"
         }
     }
 

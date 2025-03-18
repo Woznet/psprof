@@ -20,7 +20,7 @@ $Global:isISE = $host.Name -eq 'Windows PowerShell ISE Host'
 Write-Verbose "Environment detection: VSCode=$isVSCode, RegularPowerShell=$isRegularPowerShell, ISE=$isISE"
 
 # Essential path setup
-$Global:ProfileRootPath = $PSScriptRoot
+$Global:ProfileRootPath = Split-Path -Parent $PSScriptRoot
 $Global:ProfileSourcePath = Join-Path -Path $ProfileRootPath -ChildPath 'Profile'
 
 # Only load PSReadLine (essential)

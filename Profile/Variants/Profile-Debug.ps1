@@ -43,7 +43,7 @@ try {
     Log-Debug "Environment: VSCode=$isVSCode, RegularPS=$isRegularPowerShell, ISE=$isISE" "Environment"
 
     Log-Debug "Testing path setup" "Paths"
-    $Global:ProfileRootPath = $PSScriptRoot
+    $Global:ProfileRootPath = Split-Path -Parent $PSScriptRoot
     $Global:ProfileSourcePath = Join-Path -Path $ProfileRootPath -ChildPath 'Profile'
     Log-Debug "ProfileRootPath: $ProfileRootPath" "Paths"
     Log-Debug "ProfileSourcePath: $ProfileSourcePath" "Paths"
