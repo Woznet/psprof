@@ -8,6 +8,7 @@
 
 ## Configuration
 
+- Update .gitattributes for PowerShell file handling ([8a08d9f](https://github.com/jimbrig/psprof/commit/8a08d9f7283ed804ccff7c4cb1e2d5866fa98c36))  - (Jimmy Briggs)
 - **vscode:** Update settings to exclude Modules directory from search and file operations ([80d056e](https://github.com/jimbrig/psprof/commit/80d056e0a5227829ec7cdbd32b640cc8b5daf68e))  - (Jimmy Briggs)
 - Alternative profiles ([24c9bb2](https://github.com/jimbrig/psprof/commit/24c9bb27c861c877caa904242081680c37d23e18))  - (Jimmy Briggs)
 - Do not ignore desktop.ini ([87aee1c](https://github.com/jimbrig/psprof/commit/87aee1c809348707c4fe426f2fbad0a7099ead0f))  - (Jimmy Briggs)
@@ -18,6 +19,8 @@
 
 ## Documentation
 
+- Update README.md to include badges and license information ([2ad3ab0](https://github.com/jimbrig/psprof/commit/2ad3ab0253e5ea56e24a69289acdf3736c958a8c))  - (Jimmy Briggs)
+- Add GitHub Copilot instructions for PowerShell profile repository ([13f5ae6](https://github.com/jimbrig/psprof/commit/13f5ae6e43daab475040888294e624aa1e469a01))  - (Jimmy Briggs)
 - **ai:** Add PowerShell profile debugging documentation ([e835c63](https://github.com/jimbrig/psprof/commit/e835c63c858548890012cd147917679055b8e7b7))  - (Jimmy Briggs)
 - Update README to include profile optimization details ([94e982b](https://github.com/jimbrig/psprof/commit/94e982b43de2fcbd12b24010b99b167502fddfba))  - (Jimmy Briggs)
 - Readme ([2c82b1e](https://github.com/jimbrig/psprof/commit/2c82b1e6fb434774769504cae0cb09a2a21ae37e))  - (Jimmy Briggs)
