@@ -37,3 +37,16 @@ CHANGELOG.md merge=union eol=lf
 
 # Ignore rich text format files
 *.rtf linguist-vendored=true
+
+# Basic .gitattributes for a PowerShell repo.
+
+# Source files
+# ============
+*.ps1      text eol=crlf
+*.ps1x     text eol=crlf
+*.psm1     text eol=crlf
+*.psd1     text eol=crlf
+*.ps1xml   text eol=crlf
+*.pssc     text eol=crlf
+*.psrc     text eol=crlf
+*.cdxml    text eol=crlf
