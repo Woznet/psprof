@@ -1,6 +1,14 @@
 # PowerShell Profile
 
-My customized PowerShell Core profile configuration and scripts.
+<!-- BADGES:START -->
+[![Automate Changelog](https://github.com/jimbrig/psprof/actions/workflows/changelog.yml/badge.svg)](https://github.com/jimbrig/psprof/actions/workflows/changelog.yml)
+[![Dependabot Updates](https://github.com/jimbrig/psprof/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/jimbrig/psprof/actions/workflows/dependabot/dependabot-updates)
+[![PSScriptAnalyzer](https://github.com/jimbrig/psprof/actions/workflows/psscriptanalyzer.yml/badge.svg)](https://github.com/jimbrig/psprof/actions/workflows/psscriptanalyzer.yml)
+[![PSScriptAnalyzer](https://github.com/jimbrig/psprof/actions/workflows/psscriptanalyzer.yml/badge.svg)](https://github.com/jimbrig/psprof/actions/workflows/psscriptanalyzer.yml)
+<!-- BADGES:END -->
+
+> [!NOTE]
+> My customized PowerShell Core profile configuration and scripts.
 
 ## Table of Contents
 
@@ -38,7 +46,7 @@ This repository contains my PowerShell profile configuration organized into modu
 
 ## Directory Structure
 
-```
+```plaintext
 PowerShell/
 ├── Profile/                    # Core configuration files
 │   ├── aliases/               # Alias definitions
@@ -139,4 +147,4 @@ This will display timing information for each component of the profile.
 
 ## License
 
-MIT License - See LICENSE file for details
+This project is licensed under the [Unlicense](LICENSE).
