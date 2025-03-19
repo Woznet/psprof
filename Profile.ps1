@@ -45,6 +45,22 @@ if (Test-Path -Path $loggingFunctionsPath) {
     # Define minimal logging function as fallback
     function Log-Debug { param([string]$Message) Write-Verbose $Message }
 }
+# Import Update-WinGet function
+$updateWinGetPath = Join-Path -Path $PSScriptRoot -ChildPath "Profile/Functions/Public/Update-WinGet.ps1"
+if (Test-Path -Path $updateWinGetPath) {
+    . $updateWinGetPath
+    Write-Verbose "Imported Update-WinGet function from $updateWinGetPath"
+} else {
+    Write-Warning "Update-WinGet function file not found: $updateWinGetPath"
+}
+# Import Apps.ps1 functions
+$appsFunctionsPath = Join-Path -Path $PSScriptRoot -ChildPath "Profile/Functions/Apps.ps1"
+if (Test-Path -Path $appsFunctionsPath) {
+    . $appsFunctionsPath
+    Write-Verbose "Imported Apps functions from $appsFunctionsPath"
+} else {
+    Write-Warning "Apps functions file not found: $appsFunctionsPath"
+}
 
 # Start timing if measurement is enabled
 if ($Measure) {
