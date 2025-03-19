@@ -43,6 +43,8 @@
 
 ## Refactoring
 
+- **completions:** Remove lazy loading mechanism and integrate completions directly ([bc8f98a](https://github.com/jimbrig/psprof/commit/bc8f98a542333cccd64180557771da2ce7422720))  - (Jimmy Briggs)
+  - **BREAKING CHANGE:** The previous method of registering lazy-loaded completions is no longer supported; users must update their scripts to use the new completion loading approach.
 - **scripts:** Remove Get-PSFunctions.ps1 script ([9188958](https://github.com/jimbrig/psprof/commit/9188958db2d88161d8015a2c9a407d8d50948b92))  - (Jimmy Briggs)
 - **profile:** Streamline function loading in PowerShell profile ([0b0d446](https://github.com/jimbrig/psprof/commit/0b0d4464ca88c4fcdf14dd4e1c6cf3ae7f70ff68))  - (Jimmy Briggs)
 - Remove ZLocation ([a856776](https://github.com/jimbrig/psprof/commit/a856776873330164f1b339274cc118f5fa39420f))  - (Jimmy Briggs)
