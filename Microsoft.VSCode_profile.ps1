@@ -51,6 +51,6 @@ function prompt {
 }
 
 # Import PowerToys CommandNotFound module if available
-if (Get-Module -ListAvailable -Name Microsoft.WinGet.CommandNotFound) {
-  Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
-}
+# if (Get-Module -ListAvailable -Name Microsoft.WinGet.CommandNotFound) {
+#   Import-Module -Name Microsoft.WinGet.CommandNotFound -ErrorAction SilentlyContinue
+# }

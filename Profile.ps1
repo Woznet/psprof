@@ -35,6 +35,9 @@ Param(
     [Parameter()]
     [switch]$DebugLogging
 )
+
+if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
+
 # Import utility functions
 $loggingFunctionsPath = Join-Path -Path $PSScriptRoot -ChildPath "Profile/Functions/Private/Logging-Functions.ps1"
 if (Test-Path -Path $loggingFunctionsPath) {
@@ -43,7 +46,7 @@ if (Test-Path -Path $loggingFunctionsPath) {
 } else {
     Write-Warning "Logging functions file not found: $loggingFunctionsPath"
     # Define minimal logging function as fallback
-    function Log-Debug { param([string]$Message) Write-Verbose $Message }
+    function Write-ProfileLog { param([string]$Message) Write-Verbose $Message }
 }
 # Import Update-WinGet function
 $updateWinGetPath = Join-Path -Path $PSScriptRoot -ChildPath "Profile/Functions/Public/Update-WinGet.ps1"
@@ -72,7 +75,7 @@ if ($Measure) {
 if ($DebugLogging) {
     $debugLogPath = Join-Path -Path $PSScriptRoot -ChildPath "profile-debug.log"
     Initialize-DebugLog -LogPath $debugLogPath
-    Log-Debug -Message "Starting profile with debugging" -LogPath $debugLogPath
+    Write-ProfileLog -Message "Starting profile with debugging" -LogPath $debugLogPath
 }
 
 # Skip everything if Vanilla mode is enabled
@@ -87,7 +90,7 @@ Measure-ProfileBlock -Name "Environment Detection" -Timings $timings -ScriptBloc
     $Global:isRegularPowerShell = $host.Name -eq 'ConsoleHost' -and -not $isVSCode
     $Global:isISE = $host.Name -eq 'Windows PowerShell ISE Host'
 
-    Log-Debug "Environment: VSCode=$isVSCode, RegularPS=$isRegularPowerShell, ISE=$isISE"
+    Write-ProfileLog "Environment: VSCode=$isVSCode, RegularPS=$isRegularPowerShell, ISE=$isISE"
 }
 
 # Path setup
@@ -95,15 +98,15 @@ Measure-ProfileBlock -Name "Path Setup" -Timings $timings -ScriptBlock {
     $Global:ProfileRootPath = $PSScriptRoot
     $Global:ProfileSourcePath = Join-Path -Path $ProfileRootPath -ChildPath 'Profile'
 
-    Log-Debug "ProfileRootPath: $ProfileRootPath"
-    Log-Debug "ProfileSourcePath: $ProfileSourcePath"
+    Write-ProfileLog "ProfileRootPath: $ProfileRootPath"
+    Write-ProfileLog "ProfileSourcePath: $ProfileSourcePath"
 }
 
 # Essential modules
 Measure-ProfileBlock -Name "Essential Modules" -Timings $timings -ScriptBlock {
     # PSReadLine (essential)
     if (Get-Module -ListAvailable -Name PSReadLine) {
-        Log-Debug "Loading PSReadLine"
+        Write-ProfileLog "Loading PSReadLine"
         Import-Module PSReadLine -ErrorAction SilentlyContinue
 
         # Basic PSReadLine configuration
@@ -122,9 +125,12 @@ Measure-ProfileBlock -Name "Essential Modules" -Timings $timings -ScriptBlock {
 
     # Terminal-Icons (essential for directory listing)
     if (Get-Module -ListAvailable -Name Terminal-Icons) {
-        Log-Debug "Loading Terminal-Icons"
+        Write-ProfileLog "Loading Terminal-Icons"
         Import-Module Terminal-Icons -ErrorAction SilentlyContinue
     }
+
+    # Import Chocolatey Module Profile
+    Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
 }
 
 # Import core profile components
@@ -137,18 +143,18 @@ if (-not $NoImports) {
         )
 
         foreach ($Import in $CoreImports) {
-            Log-Debug "Loading $($Import.Name)"
+            Write-ProfileLog "Loading $($Import.Name)"
             $importPath = Join-Path -Path $ProfileSourcePath -ChildPath $Import.Path
             if (Test-Path -Path $importPath) {
                 try {
                     . $importPath
                 } catch {
                     Write-Warning "Failed to import $($Import.Name): $_"
-                    Log-Debug "Error loading $($Import.Name): $_"
+                    Write-ProfileLog "Error loading $($Import.Name): $_"
                 }
             } else {
                 Write-Warning "Import file not found: $importPath"
-                Log-Debug "Import file not found: $importPath"
+                Write-ProfileLog "Import file not found: $importPath"
             }
         }
     }
@@ -156,21 +162,21 @@ if (-not $NoImports) {
     # Prompt (only if oh-my-posh is installed and not in VSCode)
     Measure-ProfileBlock -Name "Prompt" -Timings $timings -ScriptBlock {
         if (-not $isVSCode -and (Get-Command oh-my-posh -ErrorAction SilentlyContinue)) {
-            Log-Debug "Loading oh-my-posh prompt"
+            Write-ProfileLog "Loading oh-my-posh prompt"
             $promptPath = Join-Path -Path $ProfileSourcePath -ChildPath 'Profile.Prompt.ps1'
             if (Test-Path -Path $promptPath) {
                 try {
                     . $promptPath
                 } catch {
                     Write-Warning "Failed to configure prompt: $_"
-                    Log-Debug "Error loading prompt: $_"
+                    Write-ProfileLog "Error loading prompt: $_"
                 }
             }
         } else {
             if ($isVSCode) {
-                Log-Debug "Skipping oh-my-posh in VSCode"
+                Write-ProfileLog "Skipping oh-my-posh in VSCode"
             } else {
-                Log-Debug "oh-my-posh not found"
+                Write-ProfileLog "oh-my-posh not found"
             }
         }
     }
@@ -181,14 +187,14 @@ if (-not $NoImports) {
         if (Test-Path -Path $completionsPath) {
             try {
                 . $completionsPath
-                Log-Debug "Loaded completions from $completionsPath"
+                Write-ProfileLog "Loaded completions from $completionsPath"
             } catch {
                 Write-Warning "Failed to load completions: $_"
-                Log-Debug "Error loading completions: $_"
+                Write-ProfileLog "Error loading completions: $_"
             }
         } else {
             Write-Warning "Completions file not found: $completionsPath"
-            Log-Debug "Completions file not found: $completionsPath"
+            Write-ProfileLog "Completions file not found: $completionsPath"
         }
     }
 
@@ -205,7 +211,7 @@ if (-not $NoImports) {
         # Load optional modules sequentially
         foreach ($module in $OptionalModules) {
             if (Get-Module -ListAvailable -Name $module -ErrorAction SilentlyContinue) {
-                Log-Debug "Loading optional module: $module"
+                Write-ProfileLog "Loading optional module: $module"
                 Import-Module $module -ErrorAction SilentlyContinue
             }
         }
@@ -215,12 +221,12 @@ if (-not $NoImports) {
     Measure-ProfileBlock -Name "Extras" -Timings $timings -ScriptBlock {
         $extrasPath = Join-Path -Path $ProfileSourcePath -ChildPath 'Profile.Extras.ps1'
         if (Test-Path -Path $extrasPath) {
-            Log-Debug "Loading extras"
+            Write-ProfileLog "Loading extras"
             try {
                 . $extrasPath
             } catch {
                 Write-Warning "Failed to load extras: $_"
-                Log-Debug "Error loading extras: $_"
+                Write-ProfileLog "Error loading extras: $_"
             }
         }
     }
@@ -229,12 +235,12 @@ if (-not $NoImports) {
 # Setup zoxide (simplified approach)
 Measure-ProfileBlock -Name "zoxide" -Timings $timings -ScriptBlock {
     if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-        Log-Debug "Initializing zoxide"
+        Write-ProfileLog "Initializing zoxide"
         try {
             Invoke-Expression (& { (zoxide init powershell | Out-String) })
         } catch {
             Write-Warning "Failed to initialize zoxide: $_"
-            Log-Debug "Error initializing zoxide: $_"
+            Write-ProfileLog "Error initializing zoxide: $_"
         }
     }
 }
