@@ -48,6 +48,8 @@
 
 ## Refactoring
 
+- **profile:** Restructure and optimize profile loading ([e760277](https://github.com/jimbrig/psprof/commit/e7602772ca5f1efc52abbce54f758ebcb08c0d57))  - (Jimmy Briggs)
+- **aliases:** Restructure PowerShell alias files ([2ab34ff](https://github.com/jimbrig/psprof/commit/2ab34ffe80eec89b30fb9b8e14aec4bcbd7cb608))  - (Jimmy Briggs)
 - **completions:** Remove lazy loading mechanism and integrate completions directly ([bc8f98a](https://github.com/jimbrig/psprof/commit/bc8f98a542333cccd64180557771da2ce7422720))  - (Jimmy Briggs)
   - **BREAKING CHANGE:** The previous method of registering lazy-loaded completions is no longer supported; users must update their scripts to use the new completion loading approach.
 - **scripts:** Remove Get-PSFunctions.ps1 script ([9188958](https://github.com/jimbrig/psprof/commit/9188958db2d88161d8015a2c9a407d8d50948b92))  - (Jimmy Briggs)
