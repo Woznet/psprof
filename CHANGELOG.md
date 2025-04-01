@@ -8,6 +8,7 @@
 
 ## Configuration
 
+- Enable command completion for various tools ([2a42705](https://github.com/jimbrig/psprof/commit/2a4270598158fd39602f5830e42ffafe8bd87522))  - (Jimmy Briggs)
 - Update .gitattributes for PowerShell file handling ([8a08d9f](https://github.com/jimbrig/psprof/commit/8a08d9f7283ed804ccff7c4cb1e2d5866fa98c36))  - (Jimmy Briggs)
 - **vscode:** Update settings to exclude Modules directory from search and file operations ([80d056e](https://github.com/jimbrig/psprof/commit/80d056e0a5227829ec7cdbd32b640cc8b5daf68e))  - (Jimmy Briggs)
 - Alternative profiles ([24c9bb2](https://github.com/jimbrig/psprof/commit/24c9bb27c861c877caa904242081680c37d23e18))  - (Jimmy Briggs)
@@ -28,6 +29,9 @@
 
 ## Features
 
+- **profile:** Add PSProfile class and registry search script ([3f5689a](https://github.com/jimbrig/psprof/commit/3f5689a32397286d09ebd92343bac1202c722573))  - (Jimmy Briggs)
+- **profile:** Implement modular profile loading with configurations ([6299ef2](https://github.com/jimbrig/psprof/commit/6299ef257a20d1dc87eea89c502fffdf042154f2))  - (Jimmy Briggs)
+- **powershell:** Add tab completion for uv CLI ([eff60a8](https://github.com/jimbrig/psprof/commit/eff60a8b3106e3e9ee576786eaa952d9473602b1))  - (Jimmy Briggs)
 - **logging:** Enhance logging functionality and measurement in profile scripts ([209b409](https://github.com/jimbrig/psprof/commit/209b4094c7320b2026dc388ba48ce94330f9c105))  - (Jimmy Briggs)
 - **module:** Add PSModuleMgmt for PowerShell module management ([48347ac](https://github.com/jimbrig/psprof/commit/48347ac9360188a63ce1f1e2ae430204b6da6eb6))  - (Jimmy Briggs)
   - **BREAKING CHANGE:** This is the initial release of the module; users should be aware that it is still in development and may not cover all use cases.
