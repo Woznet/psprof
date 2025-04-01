@@ -99,6 +99,17 @@ Process {
                 Write-Verbose "Importing optional module: $module"
                 Import-Module $module -ErrorAction Stop
                 Write-Verbose "Successfully imported module: $module"
+
+                # Execute PostImport script if specified
+                if ($moduleConfig.PostImport) {
+                    try {
+                        $scriptBlock = [ScriptBlock]::Create($moduleConfig.PostImport)
+                        Invoke-Command -ScriptBlock $scriptBlock
+                        Write-Verbose "Executed PostImport script for module: $module"
+                    } catch {
+                        Write-Warning "Failed to execute PostImport script for module $module`: $_"
+                    }
+                }
             } catch {
                 Write-Verbose "Failed to import optional module: $module"
 
@@ -115,6 +126,17 @@ Process {
 
                         # Try importing again
                         Import-Module $module -ErrorAction SilentlyContinue
+
+                        # Execute PostImport script if specified and module was successfully imported
+                        if ($moduleConfig.PostImport -and (Get-Module $module)) {
+                            try {
+                                $scriptBlock = [ScriptBlock]::Create($moduleConfig.PostImport)
+                                Invoke-Command -ScriptBlock $scriptBlock
+                                Write-Verbose "Executed PostImport script for module: $module"
+                            } catch {
+                                Write-Warning "Failed to execute PostImport script for module $module`: $_"
+                            }
+                        }
                     } catch {
                         Write-Warning "Failed to install optional module: $module"
                     }

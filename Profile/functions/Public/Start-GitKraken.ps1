@@ -1,36 +1,49 @@
-﻿<#
-.SYNOPSIS
-    Starts GitKraken
-.DESCRIPTION
-    Starts GitKraken with optional parameters
-.PARAMETER Path
-    Path to open in GitKraken
-.PARAMETER NewTab
-    Open in a new tab
-.EXAMPLE
-    Start-GitKraken
-.EXAMPLE
-    Start-GitKraken -Path C:\Projects\MyRepo
-.EXAMPLE
-    Start-GitKraken -Path C:\Projects\MyRepo -NewTab
-#>
-function Start-GitKraken {
+﻿Function Start-GitKraken {
+    <#
+    .SYNOPSIS
+        Starts GitKraken
+    .DESCRIPTION
+        Starts GitKraken with optional parameters
+    .PARAMETER Path
+        Path to open in GitKraken
+    .PARAMETER NewTab
+        Open in a new tab
+    .EXAMPLE
+        Start-GitKraken
+    .EXAMPLE
+        Start-GitKraken -Path C:\Projects\MyRepo
+    .EXAMPLE
+        Start-GitKraken -Path C:\Projects\MyRepo -NewTab
+    #>
     [CmdletBinding()]
-    param (
-        [Parameter(Position = 0)]
-        [string]$Path,
-
-        [Parameter()]
-        [switch]$NewTab
+    [Alias('gitkraken', 'krak')]
+    Param(
+        [Parameter(Position = 0, Mandatory = $false)]
+        [ValidateScript({ Test-Path -Path $_ })]
+        [String]$Path = (Get-Location).ProviderPath
     )
 
-    process {
-        $gitKrakenPath = Get-Command gitkraken.cmd -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source
+    Begin {
+        Write-Verbose "[BEGIN]: Start-GitKraken"
 
-        if (-not $gitKrakenPath) {
+        $StartPath = (Get-Location).ProviderPath
+
+        # Ensure Git Repository
+        if (-not(Test-Path -Path "$StartPath\.git")) {
+            Write-Warning 'Not a Git Repository. Aborting...'
+            return
+        }
+
+        $GitKrakenCmdPath = Get-Command gitkraken.cmd -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source
+
+        if (-not $GitKrakenCmdPath) {
             Write-Error "GitKraken not found in PATH"
             return
         }
+
+    }
+
+    process {
 
         $arguments = @()
 
@@ -48,6 +61,16 @@ function Start-GitKraken {
         }
 
         Write-Verbose "Starting GitKraken with arguments: $arguments"
-        Start-Process -FilePath $gitKrakenPath -ArgumentList $arguments
+        Write-Host "Starting GitKraken at $StartPath..." -ForegroundColor Cyan
+        Start-Process -FilePath $GitKrakenCmdPath -ArgumentList $arguments -NoNewWindow -ErrorAction SilentlyContinue
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to start GitKraken. Exit code: $LASTEXITCODE"
+        } else {
+            Write-Verbose "GitKraken started successfully."
+        }
+    }
+
+    End {
+        Write-Verbose "[END]: Start-GitKraken"
     }
 }

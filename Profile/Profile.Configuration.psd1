@@ -12,6 +12,7 @@
         'Style'
         'Completions'
         'Prompt'
+        'Extras'
     )
 
     # Feature flags

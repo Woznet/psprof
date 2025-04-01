@@ -31,9 +31,9 @@
             AutoInstall = $false
         },
         @{
-            Name = 'ZLocation'
+            Name        = 'zoxide'
             AutoInstall = $false
-            PostImport = 'Write-Host -Foreground Green "`n[ZLocation] knows about $((Get-ZLocation).Keys.Count) locations.`n"'
+            PostImport  = 'Invoke-Expression (& { (zoxide init powershell | Out-String) })'
         }
     )
 }

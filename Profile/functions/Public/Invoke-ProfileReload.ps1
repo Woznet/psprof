@@ -1,0 +1,3 @@
+﻿Function Invoke-ProfileReload {
+    & $PROFILE
+}

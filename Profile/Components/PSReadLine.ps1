@@ -67,6 +67,12 @@ Process {
             Set-PSReadLineOption -HistorySearchCursorMovesToEnd:$psReadLineConfig.HistorySearchCursorMovesToEnd
         }
 
+        # Prediction Source
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+
+        # Prediction View Style
+        Set-PSReadLineOption -PredictionViewStyle ListView
+
         # Colors
         if ($psReadLineConfig.Colors) {
             Set-PSReadLineOption -Colors $psReadLineConfig.Colors

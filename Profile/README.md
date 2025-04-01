@@ -15,7 +15,8 @@ Profile/
 │   ├── Modules.ps1       # Imports modules
 │   ├── Prompt.ps1        # Configures prompt
 │   ├── PSReadLine.ps1    # Configures PSReadLine
-│   └── Style.ps1         # Configures styling
+│   ├── Style.ps1         # Configures styling
+│   └── Extras.ps1        # Loads extra integrations
 ├── Completions/          # Completion scripts
 ├── Config/               # Configuration data files (PSD1)
 │   ├── Aliases.psd1      # Alias configuration
@@ -25,7 +26,8 @@ Profile/
 │   ├── Modules.psd1      # Module import configuration
 │   ├── Prompt.psd1       # Prompt configuration
 │   ├── PSReadLine.psd1   # PSReadLine configuration
-│   └── Style.psd1        # Style configuration
+│   ├── Style.psd1        # Style configuration
+│   └── Extras.psd1       # Extra integrations configuration
 ├── Functions/            # Function definition files
 │   ├── Private/          # Private functions
 │   └── Public/           # Public functions
