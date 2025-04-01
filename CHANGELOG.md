@@ -20,6 +20,7 @@
 
 ## Documentation
 
+- Enhance README.md with profile configuration details ([c8bf790](https://github.com/jimbrig/psprof/commit/c8bf790723a7f92b42e4166ebb7a1a3e14246cfa))  - (Jimmy Briggs)
 - Update README.md to include badges and license information ([2ad3ab0](https://github.com/jimbrig/psprof/commit/2ad3ab0253e5ea56e24a69289acdf3736c958a8c))  - (Jimmy Briggs)
 - Add GitHub Copilot instructions for PowerShell profile repository ([13f5ae6](https://github.com/jimbrig/psprof/commit/13f5ae6e43daab475040888294e624aa1e469a01))  - (Jimmy Briggs)
 - **ai:** Add PowerShell profile debugging documentation ([e835c63](https://github.com/jimbrig/psprof/commit/e835c63c858548890012cd147917679055b8e7b7))  - (Jimmy Briggs)
