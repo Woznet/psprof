@@ -1,60 +1,35 @@
-﻿Function Get-PCUpTime() {
+﻿<#
+.SYNOPSIS
+    Gets the uptime of the computer
+.DESCRIPTION
+    Gets the uptime of the computer in a human-readable format
+.EXAMPLE
+    Get-PCUptime
+.NOTES
+    Author: Jimmy Briggs
+#>
+function Get-PCUptime {
     [CmdletBinding()]
-    param(
-        [Parameter(ValueFromPipeline)]
-        $ComputerName
-    )
+    param()
 
-    begin {
-        $Version = $PSVersionTable.PSEdition
-    }
     process {
-        try {
-            switch ($Version) {
-                'Desktop' {
-                    if ($null -ne $ComputerName) {
-                        $SplatMe = @{
-                            ClassName    = 'Win32_OperatingSystem'
-                            ComputerName = $ComputerName
-                        }
-                    } else {
-                        $SplatMe = @{
-                            ClassName = 'Win32_OperatingSystem'
-                        }
-                    }
+        $os = Get-CimInstance -ClassName Win32_OperatingSystem
+        $lastBoot = $os.LastBootUpTime
+        $uptime = (Get-Date) - $lastBoot
 
-                    $Now = Get-Date
-                    $LastBootUpTime = (Get-CimInstance @SplatMe -ErrorAction Stop).LastBootUpTime
-                    $Return = $Now - $LastBootUpTime
-                    return $Return
-                }
-
-                'Core' {
-                    if ($null -ne $ComputerName) {
-                        $PCFunctionDefinition = Get-Definition Get-PCUpTime
-                        $Script = @"
-                        $PCFunctionDefinition
-                        Get-PCUpTime
-"@
-                        $ScriptBlock = {
-                            param ($Script)
-                            . ([ScriptBlock]::Create($Script))
-                        }
-                        $params = @{
-                            ComputerName = $ComputerName
-                            ScriptBlock  = $ScriptBlock
-                            ArgumentList = $Script
-                        }
-                        Invoke-Command @params
-                    } else {
-                        Get-Uptime
-                    }
-                }
-
-                DEFAULT {}
-            }
-        } catch {
-            Write-Error "$($_.Exception.Message)"
+        $properties = [ordered]@{
+            ComputerName = $env:COMPUTERNAME
+            LastBoot = $lastBoot
+            Days = $uptime.Days
+            Hours = $uptime.Hours
+            Minutes = $uptime.Minutes
+            Seconds = $uptime.Seconds
+            TotalHours = [math]::Round($uptime.TotalHours, 2)
+            TotalDays = [math]::Round($uptime.TotalDays, 2)
+            UptimeString = "{0} days, {1} hours, {2} minutes, {3} seconds" -f $uptime.Days, $uptime.Hours, $uptime.Minutes, $uptime.Seconds
         }
+
+        $obj = New-Object -TypeName PSObject -Property $properties
+        return $obj
     }
 }

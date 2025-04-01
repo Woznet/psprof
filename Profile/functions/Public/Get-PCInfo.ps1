@@ -1,51 +1,46 @@
-﻿Function Get-PCInfo() {
+﻿<#
+.SYNOPSIS
+    Gets basic information about the computer
+.DESCRIPTION
+    Gets basic information about the computer including OS, CPU, RAM, and disk space
+.EXAMPLE
+    Get-PCInfo
+.NOTES
+    Author: Jimmy Briggs
+#>
+function Get-PCInfo {
     [CmdletBinding()]
-    Param (
-        [string]$ComputerName = $env:ComputerName
-    )
+    param()
 
-    try {
-        $SystemEnclosure = Get-CimInstance win32_systemenclosure -computername $ComputerName -ErrorAction Stop
-        $OS = Get-CimInstance Win32_OperatingSystem -Computername $ComputerName -ErrorAction Stop
-    } catch {
-        Write-Error "$($_.Exception.Message) - Line Number: $($_.InvocationInfo.ScriptLineNumber)"
-        break
+    process {
+        $os = Get-CimInstance -ClassName Win32_OperatingSystem
+        $cpu = Get-CimInstance -ClassName Win32_Processor
+        $ram = Get-CimInstance -ClassName Win32_PhysicalMemory | Measure-Object -Property Capacity -Sum
+        $disk = Get-CimInstance -ClassName Win32_LogicalDisk -Filter "DeviceID='C:'"
+
+        $ramGB = [math]::Round($ram.Sum / 1GB, 2)
+        $diskGB = [math]::Round($disk.Size / 1GB, 2)
+        $freeGB = [math]::Round($disk.FreeSpace / 1GB, 2)
+        $usedGB = $diskGB - $freeGB
+        $usedPct = [math]::Round(($usedGB / $diskGB) * 100, 2)
+
+        $properties = [ordered]@{
+            ComputerName = $env:COMPUTERNAME
+            OSName = $os.Caption
+            OSVersion = $os.Version
+            OSBuild = $os.BuildNumber
+            CPUName = $cpu.Name
+            CPUCores = $cpu.NumberOfCores
+            CPULogicalProcessors = $cpu.NumberOfLogicalProcessors
+            RAMTotal = "$ramGB GB"
+            DiskTotal = "$diskGB GB"
+            DiskFree = "$freeGB GB"
+            DiskUsed = "$usedGB GB ($usedPct%)"
+            LastBoot = $os.LastBootUpTime
+            Uptime = (Get-Date) - $os.LastBootUpTime
+        }
+
+        $obj = New-Object -TypeName PSObject -Property $properties
+        return $obj
     }
-
-    #Creating Hash table from variables
-    $PCInfo = @{
-        Manufacturer   = $SystemEnclosure.Manufacturer
-        PCName         = $OS.CSName
-        OS             = $OS.Caption
-        Architecture   = $OS.OSArchitecture
-        AssetTag       = $systemenclosure.serialnumber;
-        OSVersion      = $OS.Version
-        InstallDate    = $OS.InstallDate
-        LastBootUpTime = $OS.LastBootUpTime
-    }
-
-    #Writing to Host
-    Write-Host " "
-    Write-Host "Computer Info" -Foregroundcolor Cyan
-    Write-Host "If not run on a Dell machine AssetTag is the Serial Number" -Foregroundcolor Yellow
-
-    #Display Hash Table
-    $PCInfo.getenumerator() | Sort-Object -property name | Format-Table -autosize
-
-    #Writing to Host
-    Write-Host "Computer Disk Info" -Foregroundcolor Cyan
-
-    #Display Drives
-    Get-CimInstance win32_logicaldisk -filter "drivetype=3" -computer $ComputerName |
-        Format-Table -Property DeviceID, Volumename, `
-        @{Name = "SizeGB"; Expression = { [math]::Round($_.Size / 1GB) } }, `
-        @{Name = "FreeGB"; Expression = { [math]::Round($_.Freespace / 1GB, 2) } }, `
-        @{Name = "PercentFree"; Expression = { [math]::Round(($_.Freespace / $_.size) * 100, 2) } }
-
-    #Writing to Host
-    Write-Host "Network Information" -Foregroundcolor Cyan
-
-    Get-CimInstance win32_networkadapterconfiguration -computer $ComputerName | Where-Object { $null -ne $_.IPAddress } |
-        Select-Object IPAddress, DefaultIPGateway, DNSServerSearchOrder, IPSubnet, MACAddress, Caption, DHCPEnabled, DHCPServer, DNSDomainSuffixSearchOrder |
-            Format-List
 }

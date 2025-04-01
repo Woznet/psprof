@@ -1,51 +1,53 @@
-﻿Function Start-GitKraken {
-    <#
-    .SYNOPSIS
-        Starts GitKraken at the current Git Repository (or provided path).
-    .DESCRIPTION
-        This utility function starts the GitKraken Git Client Program, launching it under the present git repository's
-        working directory by default (or provided path).
-    .EXAMPLE
-        Start-GitKraken
-    .EXAMPLE
-        Start-GitKraken -Path 'C:\Projects\MyProject'
-    .NOTES
-        Author: Jimmy Briggs <jimmy.briggs@jimbrig.com>
-    #>
+﻿<#
+.SYNOPSIS
+    Starts GitKraken
+.DESCRIPTION
+    Starts GitKraken with optional parameters
+.PARAMETER Path
+    Path to open in GitKraken
+.PARAMETER NewTab
+    Open in a new tab
+.EXAMPLE
+    Start-GitKraken
+.EXAMPLE
+    Start-GitKraken -Path C:\Projects\MyRepo
+.EXAMPLE
+    Start-GitKraken -Path C:\Projects\MyRepo -NewTab
+#>
+function Start-GitKraken {
     [CmdletBinding()]
-    [Alias('gitkraken', 'krak')]
-    Param(
-        [Parameter(Mandatory = $false)]
-        [ValidateScript({ Test-Path -Path $_ })]
-        [String]$Path = (Get-Location).ProviderPath
+    param (
+        [Parameter(Position = 0)]
+        [string]$Path,
+
+        [Parameter()]
+        [switch]$NewTab
     )
 
-    Begin {
+    process {
+        $gitKrakenPath = Get-Command gitkraken.cmd -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source
 
-        $StartPath = (Get-Location).ProviderPath
-
-        # Ensure Git Repository
-        if (-not(Test-Path -Path "$StartPath\.git")) {
-            Write-Warning 'Not a Git Repository. Aborting...'
+        if (-not $gitKrakenPath) {
+            Write-Error "GitKraken not found in PATH"
             return
         }
 
-        $GitKrakenCmdPath = Resolve-Path "$Env:LOCALAPPDATA\gitkraken\bin\gitkraken.cmd"
+        $arguments = @()
 
-        # Ensure GitKraken
-        if (-not(Test-Path -Path $GitKrakenCmdPath)) {
-            Write-Warning 'GitKraken Not Found. Aborting...'
-            return
+        if ($Path) {
+            $resolvedPath = Resolve-Path $Path -ErrorAction SilentlyContinue
+            if ($resolvedPath) {
+                $arguments += "--path=`"$resolvedPath`""
+            } else {
+                Write-Warning "Path not found: $Path"
+            }
         }
-    }
 
-    Process {
-        Write-Host "Starting GitKraken at $StartPath..." -ForegroundColor Cyan
-        Start-Process -FilePath $GitKrakenCmdPath -ArgumentList "--path $StartPath"
-    }
+        if ($NewTab) {
+            $arguments += "--new-tab"
+        }
 
-    End {
-        Write-Host 'Done.' -ForegroundColor Green
+        Write-Verbose "Starting GitKraken with arguments: $arguments"
+        Start-Process -FilePath $gitKrakenPath -ArgumentList $arguments
     }
-
 }
