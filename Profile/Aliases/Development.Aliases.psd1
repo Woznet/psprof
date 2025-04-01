@@ -1,0 +1,17 @@
+﻿@{
+    'ib'          = 'Invoke-Build'
+    'test'        = 'Invoke-Pester'
+    'pester'      = 'Invoke-Pester'
+    'psake'       = 'Invoke-PSake'
+    'psdeploy'    = 'Invoke-PSDeploy'
+    'deps'        = 'Invoke-PSDepend'
+    'reqs'        = 'Invoke-PSDepend'
+    'lint'        = 'Invoke-PSScriptAnalyzer'
+    'lintfix'     = 'Invoke-PSScriptAnalyzerFix'
+    'reload'      = 'Restart-PSSession'
+    'editprof'    = 'Edit-PSProfile'
+    'editprofdir' = 'Edit-PSProfileDirectory'
+    'reloadprof'  = 'Reload-PSProfile'
+    'help'        = 'Get-Help'
+    'dynhelp'     = 'Get-DynamicAboutHelp'
+}

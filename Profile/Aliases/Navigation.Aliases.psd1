@@ -1,0 +1,18 @@
+﻿@{
+    'Home'      = 'Set-LocationHome'
+    '~'         = 'Set-LocationHome'
+    'Desktop'   = 'Set-LocationDesktop'
+    'Downloads' = 'Set-LocationDownloads'
+    'Documents' = 'Set-LocationDocuments'
+    'Pictures'  = 'Set-LocationPictures'
+    'Music'     = 'Set-LocationMusic'
+    'Videos'    = 'Set-LocationVideos'
+    'DevDrive'  = 'Set-LocationDevDrive'
+    'Dotfiles'  = 'Set-LocationDotFiles'
+    'OneDrive'  = 'Set-LocationOneDrive'
+    'Tools'     = 'Set-LocationTools'
+    'Bin'       = 'Set-LocationBin'
+    'Config'    = 'Set-LocationConfig'
+    'Ubuntu'    = 'Set-LocationWSL'
+    'Dots'      = 'Set-LocationDotFiles'
+}

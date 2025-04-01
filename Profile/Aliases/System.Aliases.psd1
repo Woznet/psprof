@@ -1,0 +1,3 @@
+﻿@{
+    'reboot' = 'Restart-Computer'
+}

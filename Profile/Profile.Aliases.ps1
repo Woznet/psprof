@@ -1,12 +1,34 @@
-Set-Alias -Name 'Desktop' -Value 'Set-LocationDesktop'
-Set-Alias -Name 'Downloads' -Value 'Set-LocationDownloads'
-Set-Alias -Name 'Documents' -Value 'Set-LocationDocuments'
-Set-Alias -Name 'Pictures' -Value 'Set-LocationPictures'
-Set-Alias -Name 'Music' -Value 'Set-LocationMusic'
-Set-Alias -Name 'Videos' -Value 'Set-LocationVideos'
-Set-Alias -Name 'DevDrive' -Value 'Set-LocationDevDrive'
+<#
+    .SYNOPSIS
+        PowerShell Profile - Aliases
+    .DESCRIPTION
+        Defines aliases for commonly used commands and locations.
+#>
+[CmdletBinding()]
+Param()
 
-Set-Alias -Name 'Get-AboutHelp' -Value 'Get-DynamicAboutHelp'
+Begin {
+    Write-Verbose "[BEGIN]: Aliases.ps1"
 
-Set-Alias -Name 'krak' -Value 'Start-GitKraken'
-Set-Alias -Name 'rstudio' -Value 'Start-RStudio'
+    # Dot source import function
+    . $PSScriptRoot\Functions\Private\Import-Aliases.ps1
+}
+
+Process {
+    Write-Verbose "[PROCESS]: Aliases.ps1"
+
+    $AliasPath = Join-Path -Path $PSScriptRoot -ChildPath "Aliases"
+
+    Import-AliasFile -AliasFile "$AliasPath\Development.Aliases.psd1" -ErrorAction SilentlyContinue
+    Import-AliasFile -AliasFile "$AliasPath\Navigation.Aliases.psd1" -ErrorAction SilentlyContinue
+    Import-AliasFile -AliasFile "$AliasPath\Program.Aliases.psd1" -ErrorAction SilentlyContinue
+    Import-AliasFile -AliasFile "$AliasPath\System.Aliases.psd1" -ErrorAction SilentlyContinue
+
+    if (-not $Global:AliasesImports) {
+        Write-Warning "Global Variable for Alias Imports (`$Global:AliasesImports`) is not initialized."
+    }
+}
+
+End {
+    Write-Verbose "[END]: Aliases.ps1"
+}
