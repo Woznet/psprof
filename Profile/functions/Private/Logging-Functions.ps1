@@ -1,7 +1,7 @@
 # Logging-Functions.ps1
 # Functions for logging during profile initialization
 
-function Log-Debug {
+function Write-ProfileLog {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
@@ -55,10 +55,10 @@ function Initialize-DebugLog {
     $Global:mainStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
     # Log initial system information
-    Log-Debug -Message "Starting profile debugging" -Component "System" -LogPath $LogPath
-    Log-Debug -Message "PowerShell Version: $($PSVersionTable.PSVersion)" -Component "System" -LogPath $LogPath
-    Log-Debug -Message "OS: $([System.Environment]::OSVersion.VersionString)" -Component "System" -LogPath $LogPath
-    Log-Debug -Message "Host: $($Host.Name)" -Component "System" -LogPath $LogPath
+    Write-ProfileLog -Message "Starting profile debugging" -Component "System" -LogPath $LogPath
+    Write-ProfileLog -Message "PowerShell Version: $($PSVersionTable.PSVersion)" -Component "System" -LogPath $LogPath
+    Write-ProfileLog -Message "OS: $([System.Environment]::OSVersion.VersionString)" -Component "System" -LogPath $LogPath
+    Write-ProfileLog -Message "Host: $($Host.Name)" -Component "System" -LogPath $LogPath
 }
 
 function Measure-ProfileBlock {
@@ -85,7 +85,7 @@ function Measure-ProfileBlock {
     catch {
         Write-Warning "Error in block '$Name': $_"
         if ($Global:debugLog) {
-            Log-Debug -Message "Error in block '$Name': $_" -Component "Error"
+            Write-ProfileLog -Message "Error in block '$Name': $_" -Component "Error"
         }
         throw
     }
@@ -105,6 +105,6 @@ function Measure-ProfileBlock {
 
     # Log timing if debug logging is enabled
     if ($Global:debugLog) {
-        Log-Debug -Message "$Name took $($sw.Elapsed.TotalSeconds) seconds" -Component "Timing"
+        Write-ProfileLog -Message "$Name took $($sw.Elapsed.TotalSeconds) seconds" -Component "Timing"
     }
 }

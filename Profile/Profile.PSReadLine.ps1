@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-        Current User, All Hosts PowerShell `$PROFILE`: `Profile.PSReadLine.ps1`
+    Current User, All Hosts PowerShell `$PROFILE`: `Profile.PSReadLine.ps1`
 #>
 #Requires -Modules PSReadLine
 
