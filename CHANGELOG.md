@@ -28,6 +28,7 @@
 
 ## Features
 
+- **logging:** Enhance logging functionality and measurement in profile scripts ([209b409](https://github.com/jimbrig/psprof/commit/209b4094c7320b2026dc388ba48ce94330f9c105))  - (Jimmy Briggs)
 - **module:** Add PSModuleMgmt for PowerShell module management ([48347ac](https://github.com/jimbrig/psprof/commit/48347ac9360188a63ce1f1e2ae430204b6da6eb6))  - (Jimmy Briggs)
   - **BREAKING CHANGE:** This is the initial release of the module; users should be aware that it is still in development and may not cover all use cases.
 - **module:** Add module for managing Windows Defender exclusions ([918bbb4](https://github.com/jimbrig/psprof/commit/918bbb4852264974959da3acac9b7aba01c70b92))  - (Jimmy Briggs)
