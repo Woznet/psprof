@@ -8,6 +8,7 @@
 
 ## Configuration
 
+- Update PowerShell execution policies ([b81c937](https://github.com/jimbrig/psprof/commit/b81c937502f769d6d27a178e6bbef86fae2599a2))  - (Jimmy Briggs)
 - Enable command completion for various tools ([2a42705](https://github.com/jimbrig/psprof/commit/2a4270598158fd39602f5830e42ffafe8bd87522))  - (Jimmy Briggs)
 - Update .gitattributes for PowerShell file handling ([8a08d9f](https://github.com/jimbrig/psprof/commit/8a08d9f7283ed804ccff7c4cb1e2d5866fa98c36))  - (Jimmy Briggs)
 - **vscode:** Update settings to exclude Modules directory from search and file operations ([80d056e](https://github.com/jimbrig/psprof/commit/80d056e0a5227829ec7cdbd32b640cc8b5daf68e))  - (Jimmy Briggs)
@@ -20,6 +21,8 @@
 
 ## Documentation
 
+- Add WindowsCommands.md with Windows tools documentation ([3b5f27f](https://github.com/jimbrig/psprof/commit/3b5f27f8ec523aef0eb70c916675c31cdefdec82))  - (Jimmy Briggs)
+- Add links to PowerShell configuration and profiles ([3a4c40c](https://github.com/jimbrig/psprof/commit/3a4c40c1171ed1001558173e84d07aa1027705ab))  - (Jimmy Briggs)
 - Add PSReadLine documentation links ([8b71385](https://github.com/jimbrig/psprof/commit/8b71385fcb3f1c745b13057d5fe2c9a340411df5))  - (Jimmy Briggs)
 - Enhance README.md with profile configuration details ([c8bf790](https://github.com/jimbrig/psprof/commit/c8bf790723a7f92b42e4166ebb7a1a3e14246cfa))  - (Jimmy Briggs)
 - Update README.md to include badges and license information ([2ad3ab0](https://github.com/jimbrig/psprof/commit/2ad3ab0253e5ea56e24a69289acdf3736c958a8c))  - (Jimmy Briggs)
@@ -31,6 +34,7 @@
 
 ## Features
 
+- **config:** Add PowerShell snippet and update recommendations ([4acc4e2](https://github.com/jimbrig/psprof/commit/4acc4e2268de3dd79af89dbed9a46ee609bb3c76))  - (Jimmy Briggs)
 - Add function to fetch GitHub rate limits ([49f9691](https://github.com/jimbrig/psprof/commit/49f96910196b66e43ddca1a16721f9b7e23b832f))  - (Jimmy Briggs)
 - **profile:** Add PSProfile class and registry search script ([3f5689a](https://github.com/jimbrig/psprof/commit/3f5689a32397286d09ebd92343bac1202c722573))  - (Jimmy Briggs)
 - **profile:** Implement modular profile loading with configurations ([6299ef2](https://github.com/jimbrig/psprof/commit/6299ef257a20d1dc87eea89c502fffdf042154f2))  - (Jimmy Briggs)
