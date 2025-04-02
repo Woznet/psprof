@@ -20,6 +20,7 @@
 
 ## Documentation
 
+- Add PSReadLine documentation links ([8b71385](https://github.com/jimbrig/psprof/commit/8b71385fcb3f1c745b13057d5fe2c9a340411df5))  - (Jimmy Briggs)
 - Enhance README.md with profile configuration details ([c8bf790](https://github.com/jimbrig/psprof/commit/c8bf790723a7f92b42e4166ebb7a1a3e14246cfa))  - (Jimmy Briggs)
 - Update README.md to include badges and license information ([2ad3ab0](https://github.com/jimbrig/psprof/commit/2ad3ab0253e5ea56e24a69289acdf3736c958a8c))  - (Jimmy Briggs)
 - Add GitHub Copilot instructions for PowerShell profile repository ([13f5ae6](https://github.com/jimbrig/psprof/commit/13f5ae6e43daab475040888294e624aa1e469a01))  - (Jimmy Briggs)
@@ -30,6 +31,7 @@
 
 ## Features
 
+- Add function to fetch GitHub rate limits ([49f9691](https://github.com/jimbrig/psprof/commit/49f96910196b66e43ddca1a16721f9b7e23b832f))  - (Jimmy Briggs)
 - **profile:** Add PSProfile class and registry search script ([3f5689a](https://github.com/jimbrig/psprof/commit/3f5689a32397286d09ebd92343bac1202c722573))  - (Jimmy Briggs)
 - **profile:** Implement modular profile loading with configurations ([6299ef2](https://github.com/jimbrig/psprof/commit/6299ef257a20d1dc87eea89c502fffdf042154f2))  - (Jimmy Briggs)
 - **powershell:** Add tab completion for uv CLI ([eff60a8](https://github.com/jimbrig/psprof/commit/eff60a8b3106e3e9ee576786eaa952d9473602b1))  - (Jimmy Briggs)
@@ -49,6 +51,7 @@
 
 ## Refactoring
 
+- Update key bindings and remove clipboard logic ([be16733](https://github.com/jimbrig/psprof/commit/be1673342f500b7eb7a102981f2631bd4d1abb43))  - (Jimmy Briggs)
 - **profile:** Restructure and optimize profile loading ([e760277](https://github.com/jimbrig/psprof/commit/e7602772ca5f1efc52abbce54f758ebcb08c0d57))  - (Jimmy Briggs)
 - **aliases:** Restructure PowerShell alias files ([2ab34ff](https://github.com/jimbrig/psprof/commit/2ab34ffe80eec89b30fb9b8e14aec4bcbd7cb608))  - (Jimmy Briggs)
 - **completions:** Remove lazy loading mechanism and integrate completions directly ([bc8f98a](https://github.com/jimbrig/psprof/commit/bc8f98a542333cccd64180557771da2ce7422720))  - (Jimmy Briggs)
