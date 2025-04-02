@@ -41,9 +41,11 @@ if (Get-Module -ListAvailable -Name PSReadLine) {
         # PSReadLine Key Bindings
         # --------------------------------------------------------------------
 
-        Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
-        Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+        Set-PSReadLineKeyHandler -Key 'UpArrow' -Function 'HistorySearchBackward'
+        Set-PSReadLineKeyHandler -Key 'DownArrow' -Function 'HistorySearchForward'
         Set-PSReadLineKeyHandler -Key 'Alt+RightArrow' -Function 'AcceptNextSuggestionWord'
+        Set-PSReadLineKeyHandler -Key 'Ctrl+Home' -Function 'BeginningOfLine'
+        Set-PSReadLineKeyHandler -Key 'Ctrl+End' -Function 'EndOfLine'
 
         # F1 Help
         Set-PSReadLineKeyHandler -Key F1 `
@@ -133,26 +135,6 @@ if (Get-Module -ListAvailable -Name PSReadLine) {
 
         # Capture Screen (Interactive Selection from Terminal via "Chord")
         Set-PSReadLineKeyHandler -Chord 'Ctrl+d,Ctrl+c' -Function CaptureScreen
-
-        # Toggle Demo Mode
-        # Set-PSReadLineKeyHandler -Key F8 -Function EnableDemoMode
-
-        # Insert text from the clipboard as a 'here string'
-        Set-PSReadLineKeyHandler -Key Ctrl+Alt+v `
-            -BriefDescription PasteAsHereString `
-            -LongDescription 'Paste the clipboard text as a here string' `
-            -ScriptBlock {
-            param($key, $arg)
-
-            Add-Type -Assembly PresentationCore
-            if ([System.Windows.Clipboard]::ContainsText()) {
-                # Get clipboard text - remove trailing spaces, convert \r\n to \n, and remove the final \n.
-                $text = ([System.Windows.Clipboard]::GetText() -replace "\p{Zs}*`r?`n", "`n").TrimEnd()
-                [Microsoft.PowerShell.PSConsoleReadLine]::Insert("@'`n$text`n'@")
-            } else {
-                [Microsoft.PowerShell.PSConsoleReadLine]::Ding()
-            }
-        }
 
         # Sometimes you want to get a property of invoke a member on what you've entered so far
         # but you need parens to do that.  This binding will help by putting parens around the current selection,
