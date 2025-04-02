@@ -9,8 +9,8 @@ Function Get-GitHubRateLimits {
     Begin{
         Write-Verbose "[Begin]: Get-GitHubRateLimits"
         if (-not(Get-Command -Name gh -ErrorAction SilentlyContinue)) {
-            Write-Warning "No gh CLI found."
-            return
+            Write-Host "GitHub CLI (gh) is not installed. Please install it to use this function."
+            exit 1
         }
     }
 
@@ -18,5 +18,9 @@ Function Get-GitHubRateLimits {
         Write-Verbose "[Process]: Get-GitHubRateLimits"
         $cmd = "gh api -H 'Accept: application/vnd.github+json' -H 'X-GitHub-Api-Version: 2022-11-28' /rate_limit"
         & $cmd
+    }
+
+    End {
+        Write-Verbose "[End]: Get-GitHubRateLimits"
     }
 }
