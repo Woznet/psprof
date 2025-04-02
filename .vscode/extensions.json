@@ -3,6 +3,7 @@
     "editorconfig.editorconfig",
     "ms-vscode.PowerShell",
     "dougfinke.vscode-pester",
+    "pspester.pester-test",
     "ms-dotnettools.csharp",
     "ms-vscode.cpptools",
     "ms-azuretools.vscode-docker",
