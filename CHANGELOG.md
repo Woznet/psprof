@@ -34,6 +34,8 @@
 
 ## Features
 
+- Add command history search function ([cf17633](https://github.com/jimbrig/psprof/commit/cf1763329159dad77409ec9da8d493d78054397c))  - (Jimmy Briggs)
+- Add function to remove GitHub workflow runs ([2a19e2f](https://github.com/jimbrig/psprof/commit/2a19e2f7aa7b77a8d2ea2169bc40ded23660b942))  - (Jimmy Briggs)
 - **config:** Add PowerShell snippet and update recommendations ([4acc4e2](https://github.com/jimbrig/psprof/commit/4acc4e2268de3dd79af89dbed9a46ee609bb3c76))  - (Jimmy Briggs)
 - Add function to fetch GitHub rate limits ([49f9691](https://github.com/jimbrig/psprof/commit/49f96910196b66e43ddca1a16721f9b7e23b832f))  - (Jimmy Briggs)
 - **profile:** Add PSProfile class and registry search script ([3f5689a](https://github.com/jimbrig/psprof/commit/3f5689a32397286d09ebd92343bac1202c722573))  - (Jimmy Briggs)
@@ -55,6 +57,7 @@
 
 ## Refactoring
 
+- Improve error handling in GitHub rate limits function ([c1b9906](https://github.com/jimbrig/psprof/commit/c1b99063ea34a97f60e8201c40253c18b5fc4b7a))  - (Jimmy Briggs)
 - Update key bindings and remove clipboard logic ([be16733](https://github.com/jimbrig/psprof/commit/be1673342f500b7eb7a102981f2631bd4d1abb43))  - (Jimmy Briggs)
 - **profile:** Restructure and optimize profile loading ([e760277](https://github.com/jimbrig/psprof/commit/e7602772ca5f1efc52abbce54f758ebcb08c0d57))  - (Jimmy Briggs)
 - **aliases:** Restructure PowerShell alias files ([2ab34ff](https://github.com/jimbrig/psprof/commit/2ab34ffe80eec89b30fb9b8e14aec4bcbd7cb608))  - (Jimmy Briggs)
