@@ -34,6 +34,7 @@
 
 ## Features
 
+- Add new update functions to profile configuration ([d3fbcc4](https://github.com/jimbrig/psprof/commit/d3fbcc46855a4886321d6ad4a77d79edcd2ea02f))  - (Jimmy Briggs)
 - Add command history search function ([cf17633](https://github.com/jimbrig/psprof/commit/cf1763329159dad77409ec9da8d493d78054397c))  - (Jimmy Briggs)
 - Add function to remove GitHub workflow runs ([2a19e2f](https://github.com/jimbrig/psprof/commit/2a19e2f7aa7b77a8d2ea2169bc40ded23660b942))  - (Jimmy Briggs)
 - **config:** Add PowerShell snippet and update recommendations ([4acc4e2](https://github.com/jimbrig/psprof/commit/4acc4e2268de3dd79af89dbed9a46ee609bb3c76))  - (Jimmy Briggs)
