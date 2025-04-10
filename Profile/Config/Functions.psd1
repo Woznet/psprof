@@ -28,6 +28,21 @@
             Name = 'Get-PCUptime'
             Path = 'Profile/Functions/Public/Get-PCUptime.ps1'
             Enabled = $true
+        },
+        @{
+            Name    = 'Update-WinGet'
+            Path    = 'Profile/Functions/Public/Update-WinGet.ps1'
+            Enabled = $true
+        },
+        @{
+            Name    = 'Update-PSModules'
+            Path    = 'Profile/Functions/Public/Update-PSModules.ps1'
+            Enabled = $true
+        },
+        @{
+            Name    = 'Update-AllPSResources'
+            Path    = 'Profile/Functions/Public/Update-AllPSResources.ps1'
+            Enabled = $true
         }
     )
 
