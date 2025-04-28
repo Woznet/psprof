@@ -34,6 +34,7 @@
 
 ## Features
 
+- Add new PowerShell scripts for various utilities ([bcc6c94](https://github.com/jimbrig/psprof/commit/bcc6c9470a46521205c981c4509384ef3cc95500))  - (Jimmy Briggs)
 - Add new update functions to profile configuration ([d3fbcc4](https://github.com/jimbrig/psprof/commit/d3fbcc46855a4886321d6ad4a77d79edcd2ea02f))  - (Jimmy Briggs)
 - Add command history search function ([cf17633](https://github.com/jimbrig/psprof/commit/cf1763329159dad77409ec9da8d493d78054397c))  - (Jimmy Briggs)
 - Add function to remove GitHub workflow runs ([2a19e2f](https://github.com/jimbrig/psprof/commit/2a19e2f7aa7b77a8d2ea2169bc40ded23660b942))  - (Jimmy Briggs)
