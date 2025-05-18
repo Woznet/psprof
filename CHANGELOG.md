@@ -8,6 +8,7 @@
 
 ## Configuration
 
+- Update vscode settings and add submodule ([d23891a](https://github.com/jimbrig/psprof/commit/d23891ab36acd1d683276496b9e68884d78cb751))  - (Jimmy Briggs)
 - Update PowerShell execution policies ([b81c937](https://github.com/jimbrig/psprof/commit/b81c937502f769d6d27a178e6bbef86fae2599a2))  - (Jimmy Briggs)
 - Enable command completion for various tools ([2a42705](https://github.com/jimbrig/psprof/commit/2a4270598158fd39602f5830e42ffafe8bd87522))  - (Jimmy Briggs)
 - Update .gitattributes for PowerShell file handling ([8a08d9f](https://github.com/jimbrig/psprof/commit/8a08d9f7283ed804ccff7c4cb1e2d5866fa98c36))  - (Jimmy Briggs)
