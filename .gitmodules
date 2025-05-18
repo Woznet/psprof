@@ -1,0 +1,3 @@
+[submodule "Tools/mcp-powershell-exec"]
+	path = Tools/mcp-powershell-exec
+	url = https://github.com/dfinke/mcp-powershell-exec.git
