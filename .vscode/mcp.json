@@ -6,6 +6,15 @@
                 "C:\\Users\\jimmy\\Documents\\PowerShell\\Tools\\mcp-powershell-exec\\server.py"
             ],
             "env": {}
+        },
+        "repomix": {
+            "command": "cmd",
+            "args": [
+                "/c",
+                "repomix.cmd",
+                "--mcp"
+            ],
+            "env": {}
         }
     }
 }
