@@ -8,6 +8,9 @@
 
 ## Configuration
 
+- Enhance editorconfig for YAML files ([d71cd4c](https://github.com/jimbrig/psprof/commit/d71cd4c35e1b94321b9dc74f403e224a7d981694))  - (Jimmy Briggs)
+- Add repomix command to mcp configuration ([65cbfdc](https://github.com/jimbrig/psprof/commit/65cbfdcb32b3bd1813148892baea37a1b00351ed))  - (Jimmy Briggs)
+- Add PowerShell workspace settings ([866f163](https://github.com/jimbrig/psprof/commit/866f163860279bf87b7fe75882df5b49f8064fd1))  - (Jimmy Briggs)
 - Update vscode settings and add submodule ([d23891a](https://github.com/jimbrig/psprof/commit/d23891ab36acd1d683276496b9e68884d78cb751))  - (Jimmy Briggs)
 - Update PowerShell execution policies ([b81c937](https://github.com/jimbrig/psprof/commit/b81c937502f769d6d27a178e6bbef86fae2599a2))  - (Jimmy Briggs)
 - Enable command completion for various tools ([2a42705](https://github.com/jimbrig/psprof/commit/2a4270598158fd39602f5830e42ffafe8bd87522))  - (Jimmy Briggs)
@@ -18,6 +21,7 @@
 
 ## DevOps
 
+- Add Repomix workflow for repository packing ([9899b21](https://github.com/jimbrig/psprof/commit/9899b21671da9fc0805a27c67469d323612746bd))  - (Jimmy Briggs)
 - Add workflow to automate changelog generation ([d87f1f6](https://github.com/jimbrig/psprof/commit/d87f1f6eb00a57dd2e79425beddbc0439f25857f))  - (Jimmy Briggs)
 
 ## Documentation
