@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"powershell.codeFormatting.preset": "OTBS",
+		"powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
+		"powershell.codeFormatting.whitespaceBeforeOpenParen": true,
+		"powershell.codeFormatting.whitespaceAroundOperator": true,
+		"powershell.codeFormatting.whitespaceAfterSeparator": true,
+		"omnisharp.enableEditorConfigSupport": true
+	}
+}
