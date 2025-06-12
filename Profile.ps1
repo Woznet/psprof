@@ -36,7 +36,21 @@ Param(
     [switch]$DebugLogging
 )
 
-if ($env:TERM_PROGRAM -eq "vscode") { . "$(code --locate-shell-integration-path pwsh)" }
+# Load VSCode shell integration if applicable
+if ($env:TERM_PROGRAM -eq "vscode" -or $Host.Name -match 'Visual Studio Code') {
+    try {
+        . "$(code --locate-shell-integration-path pwsh)"
+    } catch {
+        Write-Verbose "Failed to load VSCode shell integration: $_"
+    }
+} elseif ($env:TERM_PROGRAM -eq "vscode-insiders" -or $Host.Name -match 'Visual Studio Code Insiders') {
+    try {
+        # Try to use the insiders command for shell integration
+        . "$(code-insiders --locate-shell-integration-path pwsh)"
+    } catch {
+        Write-Verbose "Failed to load VSCode Insiders shell integration: $_"
+    }
+}
 
 # Import utility functions
 $loggingFunctionsPath = Join-Path -Path $PSScriptRoot -ChildPath "Profile/Functions/Private/Logging-Functions.ps1"
