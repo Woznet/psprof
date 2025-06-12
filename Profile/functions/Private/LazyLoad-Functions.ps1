@@ -19,33 +19,41 @@ function Register-LazyCompletion {
 
         Write-Verbose "Lazy-loading completion for $commandName"
 
+        # First, unregister this lazy completer to avoid infinite loops
+        try {
+            [System.Management.Automation.CommandCompletion]::RemoveArgumentCompleter($commandName, $null)
+        } catch {
+            # Ignore errors - this method might not exist in all PS versions
+        }
+
         # Load the completion script
         . $ScriptPath
 
-        # Get the completer function that was just loaded
-        $completerFunction = Get-Item "Function:*" | Where-Object {
-            $_.ScriptBlock.ToString() -match "Register-ArgumentCompleter.*$CommandName"
-        } | Select-Object -First 1
+        # Now get the newly registered completer and execute it
+        $completer = Get-ArgumentCompleter | Where-Object { $_.CommandName -eq $commandName }
 
-        if ($completerFunction) {
-            Write-Verbose "Found completer function: $($completerFunction.Name)"
+        if ($completer) {
+            Write-Verbose "Found registered completer for $commandName, executing it"
+            # Execute the real completer
+            & $completer.ScriptBlock $commandName $parameterName $wordToComplete $commandAst $fakeBoundParameters
+        } else {
+            Write-Verbose "No completer found for $commandName after loading script, trying native completer lookup"
 
-            # Get the actual completer scriptblock
-            $completer = Get-ArgumentCompleter -CommandName $CommandName -ErrorAction SilentlyContinue
-
-            if ($completer) {
-                Write-Verbose "Running completer for $CommandName"
-                # Run the completer
-                & $completer.ScriptBlock $commandName $parameterName $wordToComplete $commandAst $fakeBoundParameters
-            } else {
-                Write-Verbose "No completer found for $CommandName after loading script"
+            # For native completers, we need to look in a different place
+            # Try to invoke tab completion directly after the script has loaded
+            try {
+                # Use PowerShell's built-in completion system
+                $results = [System.Management.Automation.CommandCompletion]::CompleteInput(
+                    "$commandName $wordToComplete",
+                    "$commandName $wordToComplete".Length,
+                    $null
+                )
+                return $results.CompletionMatches
+            } catch {
+                Write-Verbose "Failed to get completions for $commandName after loading: $_"
                 # Return empty array as fallback
                 @()
             }
-        } else {
-            Write-Verbose "No completer function found for $CommandName in loaded script"
-            # Return empty array as fallback
-            @()
         }
     }
 

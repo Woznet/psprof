@@ -1,66 +1,37 @@
-﻿# PowerShell profile management functions
-Function Edit-PSProfile {
-    try {
-        $cmd = "$Env:Editor $PROFILE.CurrentUserAllHosts"
-        Invoke-Expression -Command $cmd
-    } catch {
-        Write-Error "Failed to edit PS profile: $_"
-    }
-}
+﻿function Edit-PSProfile {
+    [CmdletBinding()]
+    param(
+        [Parameter(Position = 0)]
+        [ValidateSet("CurrentUserCurrentHost", "CurrentUserAllHosts", "AllUsersCurrentHost", "AllUsersAllHosts")]
+        [string]$Type = "CurrentUserCurrentHost",
 
-Function Edit-PSProfileProject {
-    try {
-        if (-not($ProfileRootPath)) {
-            Write-Warning 'ProfileRootPath not found.'
-            $Global:ProfileRootPath = Split-Path -Path $PROFILE -Parent
+        [switch]$OpenFolder,
+
+        [string]$Editor
+    )
+
+    # Determine editor: use parameter, then $Env:EDITOR, else notepad.exe
+    if (-not $Editor) {
+        if ($Env:EDITOR) {
+            $Editor = $Env:EDITOR
+        } else {
+            $Editor = "notepad.exe"
         }
-
-        $cmd = "$Env:Editor $ProfileRootPath"
-        Invoke-Expression -Command $cmd
-    } catch {
-        Write-Error "Failed to edit PS profile project: $_"
     }
-}
 
-Function Get-PSProfileFunctions {
-    try {
-        $ProfileSourcePath = Split-Path -Path $PROFILE -Parent
-        $PSProfileFiles = Get-ChildItem -Path "$ProfileSourcePath\*.ps1" -Recurse |
-            Select-Object -ExpandProperty FullName |
-                Convert-Path
+    $profilePath = $PROFILE.$Type
 
-        $Functions = @()
-        foreach ($file in $PSProfileFiles) {
-            $ast = [System.Management.Automation.Language.Parser]::ParseFile(
-                $file, [ref]$null, [ref]$null)
-
-            $functions = $ast.FindAll({
-                    param($ast)
-                    $ast -is [System.Management.Automation.Language.FunctionDefinitionAst]
-                }, $true)
-
-            foreach ($function in $functions) {
-                $help = $function.GetHelpContent()
-                $Functions += [PSCustomObject]@{
-                    Name        = $function.Name
-                    Description = $help.Synopsis
-                    File        = $file
-                }
-            }
-        }
-
-        return $Functions | Sort-Object Name
-    } catch {
-        Write-Error "Failed to get PS profile functions: $_"
+    # Ensure profile file exists
+    if (-not (Test-Path -Path $profilePath)) {
+        New-Item -ItemType File -Path $profilePath -Force | Out-Null
+        Write-Host "Created new profile at $profilePath"
     }
-}
 
-Function Invoke-ProfileReload {
-    try {
-        Write-Host "Reloading PowerShell profile..." -ForegroundColor Cyan
-        & $PROFILE
-        Write-Host "Profile reloaded successfully." -ForegroundColor Green
-    } catch {
-        Write-Error "Failed to reload profile: $_"
+    # Open folder or file in editor
+    if ($OpenFolder) {
+        & $Editor (Split-Path -Parent $profilePath) *> $null
+    } else {
+        & $Editor $profilePath *> $null
     }
+
 }

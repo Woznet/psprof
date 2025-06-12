@@ -19,5 +19,6 @@
         'aws'    = 'Profile/Completions/aws.ps1'
         'bat'    = 'Profile/Completions/bat.ps1'
         'choco'  = 'Profile/Completions/choco.ps1'
+        'volta'  = 'Profile/Completions/volta.ps1'
     }
 }

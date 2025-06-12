@@ -58,15 +58,14 @@ Process {
         Write-Progress -Activity 'Loading completion scripts' -Completed
     } else {
         # Use lazy loading for completions
-        Write-Verbose 'Setting up lazy loading for completions'
-
-        # Register common completions for lazy loading
+        Write-Verbose 'Setting up lazy loading for completions'        # Register common completions for lazy loading
         $commonCommands = @{
             'docker' = $completionFiles | Where-Object { $_.Name -like '*docker*.ps1' } | Select-Object -First 1
             'git'    = $completionFiles | Where-Object { $_.Name -like '*git*.ps1' } | Select-Object -First 1
             'winget' = $completionFiles | Where-Object { $_.Name -like '*winget*.ps1' } | Select-Object -First 1
             'scoop'  = $completionFiles | Where-Object { $_.Name -like '*scoop*.ps1' } | Select-Object -First 1
             'gh'     = $completionFiles | Where-Object { $_.Name -like '*gh*.ps1' } | Select-Object -First 1
+            'volta'  = $completionFiles | Where-Object { $_.Name -like '*volta*.ps1' } | Select-Object -First 1
         }
 
         foreach ($command in $commonCommands.Keys) {
