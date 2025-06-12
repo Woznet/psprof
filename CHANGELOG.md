@@ -26,6 +26,7 @@
 
 ## Documentation
 
+- Add custom functions reference ([d07d66e](https://github.com/jimbrig/psprof/commit/d07d66efd65c9bed2b6e9cc97684aae194793bc3))  - (Jimmy Briggs)
 - Add WindowsCommands.md with Windows tools documentation ([3b5f27f](https://github.com/jimbrig/psprof/commit/3b5f27f8ec523aef0eb70c916675c31cdefdec82))  - (Jimmy Briggs)
 - Add links to PowerShell configuration and profiles ([3a4c40c](https://github.com/jimbrig/psprof/commit/3a4c40c1171ed1001558173e84d07aa1027705ab))  - (Jimmy Briggs)
 - Add PSReadLine documentation links ([8b71385](https://github.com/jimbrig/psprof/commit/8b71385fcb3f1c745b13057d5fe2c9a340411df5))  - (Jimmy Briggs)
@@ -39,6 +40,11 @@
 
 ## Features
 
+- Edit-psprofile function and enhanced completions system ([d67ccd1](https://github.com/jimbrig/psprof/commit/d67ccd1dfa96bb924574df695f5aafb16a0fd6dd))  - (Jimmy Briggs)
+- Add volta cli completion support ([caa9ebe](https://github.com/jimbrig/psprof/commit/caa9ebe0fbe2af8d871e975d0f8d2b2685b80365))  - (Jimmy Briggs)
+- Finish code-insiders support ([a976883](https://github.com/jimbrig/psprof/commit/a9768838807440c9a63354c2399d9f83886d18c5))  - (Jimmy Briggs)
+- Re-enabled command not found suggestions ([45679fb](https://github.com/jimbrig/psprof/commit/45679fb5c482c97ff9b42e9ccdf340dce9827ae2))  - (Jimmy Briggs)
+- Add code-insiders support ([c607040](https://github.com/jimbrig/psprof/commit/c60704037c1b748bb2d887c4b2c67ba77c0bc9e4))  - (Jimmy Briggs)
 - Add new PowerShell scripts for various utilities ([bcc6c94](https://github.com/jimbrig/psprof/commit/bcc6c9470a46521205c981c4509384ef3cc95500))  - (Jimmy Briggs)
 - Add new update functions to profile configuration ([d3fbcc4](https://github.com/jimbrig/psprof/commit/d3fbcc46855a4886321d6ad4a77d79edcd2ea02f))  - (Jimmy Briggs)
 - Add command history search function ([cf17633](https://github.com/jimbrig/psprof/commit/cf1763329159dad77409ec9da8d493d78054397c))  - (Jimmy Briggs)
