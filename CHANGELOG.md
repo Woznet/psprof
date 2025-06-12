@@ -64,6 +64,7 @@
 
 ## Refactoring
 
+- Use Microsoft.WindGet.CommandNotFound module ([a7a8042](https://github.com/jimbrig/psprof/commit/a7a8042d9dff3551db450cfa82cf68c209937ec4))  - (Jimmy Briggs)
 - Improve error handling in GitHub rate limits function ([c1b9906](https://github.com/jimbrig/psprof/commit/c1b99063ea34a97f60e8201c40253c18b5fc4b7a))  - (Jimmy Briggs)
 - Update key bindings and remove clipboard logic ([be16733](https://github.com/jimbrig/psprof/commit/be1673342f500b7eb7a102981f2631bd4d1abb43))  - (Jimmy Briggs)
 - **profile:** Restructure and optimize profile loading ([e760277](https://github.com/jimbrig/psprof/commit/e7602772ca5f1efc52abbce54f758ebcb08c0d57))  - (Jimmy Briggs)
