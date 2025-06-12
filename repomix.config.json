@@ -1,0 +1,41 @@
+{
+  "output": {
+    "filePath": "Docs\\Repomix\\psprof.repomix-output.md",
+    "style": "markdown",
+    "parsableStyle": false,
+    "fileSummary": true,
+    "directoryStructure": true,
+    "removeComments": false,
+    "removeEmptyLines": false,
+    "compress": false,
+    "topFilesLength": 5,
+    "showLineNumbers": false,
+    "copyToClipboard": false
+  },
+  "include": [],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+        "Temp/**",
+        "node_modules/**",
+        "_Source/**",
+        ".git/**",
+        ".vscode/**",
+        ".repomixignore",
+        "repomix.config.json",
+        "Docs/Repomix/**",
+        "Docs/Cline/**",
+        "Tools/ReportUnit/**",
+        "Tools/mcp-powershell-exec/**",
+        "System/**",
+        "Modules/**"
+    ]
+  },
+  "security": {
+    "enableSecurityCheck": true
+  },
+  "tokenCount": {
+    "encoding": "o200k_base"
+  }
+}

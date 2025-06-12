@@ -10,6 +10,7 @@
 - [Integration Tests](#integration-tests)
 - [Unit Tests](#unit-tests)
 - [System Tests](#system-tests)
+- [Profile Tests](#profile-tests)
 - [Usage](#usage)
 - [Results](#results)
 - [Additional Information](#additional-information)
@@ -58,6 +59,34 @@
 - [Visual Studio Code Tests](./Windows/VSCode.Tests.ps1): Verifies the configuration of Visual Studio Code and its settings.
 - [Windows Terminal Tests](./Windows/Terminal.Tests.ps1): Checks the configuration of the Windows Terminal program.
 - [Windows Subsystem for Linux (WSL) Tests](./Windows/WSL.Tests.ps1): Ensures the proper installation and configuration of WSL.
+
+## Profile Tests
+
+The `Profile/` directory contains tests specifically for the PowerShell profile setup:
+
+- **Test-ProfileSetup.ps1** - Comprehensive verification of the entire profile setup
+- **Test-CompletionFinal.ps1** - Tests for CLI completion functionality
+- **Test-CompletionSystem.ps1** - Tests for the completion system architecture
+- **Test-VoltaCompletion.ps1** - Specific tests for Volta CLI completions
+- **Test-VSCodeProfile.ps1** - Tests for VSCode-specific profile features
+- **Profile.Tests.ps1** - Unit tests for profile components
+- **Optimization/** - Performance and optimization tests
+
+### Running Profile Tests
+
+```powershell
+# Run comprehensive profile setup verification
+pwsh -NoProfile -File ".\Tests\Profile\Test-ProfileSetup.ps1"
+
+# Run specific completion tests
+pwsh -NoProfile -File ".\Tests\Profile\Test-VoltaCompletion.ps1"
+
+# Run all profile tests
+Get-ChildItem ".\Tests\Profile\Test-*.ps1" | ForEach-Object {
+    Write-Host "Running $($_.Name)..." -ForegroundColor Yellow
+    pwsh -NoProfile -File $_.FullName
+}
+```
 
 ## Usage
 

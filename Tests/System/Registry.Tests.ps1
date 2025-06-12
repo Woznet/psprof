@@ -50,3 +50,38 @@ Describe 'Windows Registry Configuration' {
         }
     }
 }
+
+Describe "Registry Tweaks" {
+
+    BeforeAll {
+        $Script:RegistryEdits = @{
+            'ShowSecondsInTaskbar' = @{
+                'Path'  = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+                'Name'  = 'ShowSecondsInSystemClock'
+                'Type'  = 'DWORD'
+                'Value' = 1
+            }
+            'DisableShortcutText' = @{
+                'Path'  = 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
+                'Name'  = 'link'
+                'Type'  = 'DWORD'
+                'Value' = 1
+            }
+        }
+    }
+
+    It "ShowsSecondsInTaskbar" {
+        $splat = @{
+            Path        = $RegistryEdits.ShowSecondsInTaskbar.Path
+            Name        = $RegistryEdits.ShowSecondsInTaskbar.Name
+            ErrorAction = 'SilentlyContinue'
+        }
+        $Val = Get-ItemProperty @splat
+
+        If ($Val) {
+            $Val.ShowSecondsInSystemClock | Should -Be 1
+        } Else {
+            Write-Info -Message 'Registry key not found...'
+        }
+    }
+}

@@ -1,4 +1,0 @@
-﻿enum SecretType {
-    PSCredential
-    SecureString
-}
